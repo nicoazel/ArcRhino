@@ -14,7 +14,7 @@ namespace ArcRhino_Module
 {
    static class GisUtil
    {
-      internal static void getFirstLayer(RhinoDoc rhinoDoc)
+      internal static void copySelectedObjects(RhinoDoc rhinoDoc)
       {
          var firstLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
          var count = 0;
@@ -36,15 +36,15 @@ namespace ArcRhino_Module
                      Feature feature = rowCursor.Current as Feature;
                      if (feature.GetShape() is Polygon polygon)
                      {
-                        convertPolygon(firstLayer, polygon, rhinoDoc);
+                        convertPolygon(firstLayer, feature, polygon, rhinoDoc);
                      }
                      if (feature.GetShape() is Polyline polyline)
                      {
-                        convertPolyline(firstLayer, polyline, rhinoDoc);
+                        convertPolyline(firstLayer, feature, polyline, rhinoDoc);
                      }
                      if (feature.GetShape() is MapPoint point)
                      {
-                        convertPoint(firstLayer, point, rhinoDoc);
+                        convertPoint(firstLayer, feature, point, rhinoDoc);
                      }
                      if (feature.GetShape() is Multipoint multiPoint)
                      {
@@ -57,7 +57,7 @@ namespace ArcRhino_Module
          });
       }
 
-      private static void convertPoint(FeatureLayer featureLayer, MapPoint point, RhinoDoc rhinoDoc)
+      private static void convertPoint(FeatureLayer featureLayer, Feature feature, MapPoint point, RhinoDoc rhinoDoc)
       {
          if (rhinoDoc != null)
          {
@@ -75,7 +75,7 @@ namespace ArcRhino_Module
          }
       }
 
-      private static void convertPolygon(FeatureLayer featureLayer, Polygon polygon, RhinoDoc rhinoDoc)
+      private static void convertPolygon(FeatureLayer featureLayer, Feature feature, Polygon polygon, RhinoDoc rhinoDoc)
       {
          if (rhinoDoc != null)
          {
@@ -93,7 +93,7 @@ namespace ArcRhino_Module
          }
       }
 
-      private static void convertPolyline(FeatureLayer featureLayer, Polyline polyline, RhinoDoc rhinoDoc)
+      private static void convertPolyline(FeatureLayer featureLayer, Feature feature, Polyline polyline, RhinoDoc rhinoDoc)
       {
          if (rhinoDoc != null)
          {
@@ -103,12 +103,39 @@ namespace ArcRhino_Module
                rhinoDoc.Layers.Add(featureLayer.Name, System.Drawing.Color.FromArgb(0, 0, 0, 0));
             }
             var layerIndex = rhinoDoc.Layers.FindName(featureLayer.Name).Index;
+            feature.GetFields();
+            var dict = new Rhino.Collections.ArchivableDictionary();
+
             var attrs = new Rhino.DocObjects.ObjectAttributes()
             {
                LayerIndex = layerIndex
             };
-            rhinoDoc.Objects.AddPolyline(rhinoPoints, attrs);
+
+            var guid = rhinoDoc.Objects.AddPolyline(rhinoPoints, attrs);
+            var obj = rhinoDoc.Objects.FindId(guid);
+            bindAttrs(obj, feature);
          }
+      }
+
+      private static void bindAttrs(Rhino.DocObjects.RhinoObject obj, Feature feature)
+      {
+         var fields = feature.GetFields();
+         for (int i = 0; i < fields.Count; i++)
+         {
+            try
+            {
+               var name = fields[i].Name;
+               var val = feature.GetOriginalValue(i);
+               obj.UserDictionary[name] = val;
+
+            }
+            catch
+            {
+
+            }
+
+         }
+
       }
 
       internal static Rhino.Geometry.Point3d convertToRhinoPoint(MapPoint p)

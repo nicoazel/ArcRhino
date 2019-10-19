@@ -25,7 +25,6 @@ namespace ArcRhino_Module
    public partial class Dockpane1View : UserControl
    {
       UserControl1 userControl;
-      RhinoCore rhinoCore => userControl?.rhinoCore ?? null;
       RhinoDoc rhinoDoc => RhinoDoc.ActiveDoc ?? null;
       public Dockpane1View()
       {
@@ -44,7 +43,7 @@ namespace ArcRhino_Module
 
       private void bImport_Click(object sender, RoutedEventArgs e)
       {
-         GisUtil.getFirstLayer(rhinoDoc);
+         GisUtil.copySelectedObjects(rhinoDoc);
       }
 
       private void bExport_Click(object sender, RoutedEventArgs e)
