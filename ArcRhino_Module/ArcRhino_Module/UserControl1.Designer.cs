@@ -60,10 +60,13 @@ namespace ArcRhino_Module
 
       private RhinoWindows.Forms.Controls.ViewportControl viewportControl1;
 
-      
+      [STAThread]
       protected override void OnHandleCreated(EventArgs e)
       {
-         rhinoCore = new Rhino.Runtime.InProcess.RhinoCore(new string[] { "/NOSPLASH" }, WindowStyle.Hidden, Handle);
+         if (rhinoCore == null)
+         {
+            rhinoCore = new Rhino.Runtime.InProcess.RhinoCore(new string[] { "/NOSPLASH" }, WindowStyle.Hidden, Handle);
+         }
          base.OnHandleCreated(e);
       }
       protected override void OnHandleDestroyed(EventArgs e)

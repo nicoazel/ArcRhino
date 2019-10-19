@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms.Integration;
-
+using Microsoft.Win32;
 
 namespace ArcRhino_Module
 {
@@ -35,6 +35,26 @@ namespace ArcRhino_Module
          Grid.SetRow(host, 1);
          host.Child = new UserControl1();
          grid.Children.Add(host);
+      }
+
+      private void bImport_Click(object sender, RoutedEventArgs e)
+      {
+         GisUtil.getFirstLayer();
+      }
+
+      private void bExport_Click(object sender, RoutedEventArgs e)
+      {
+
+      }
+
+      private void clickOpenRhinoFile(object sender, RoutedEventArgs e)
+      {
+         var ofd = new OpenFileDialog() { Filter = "3DM | *.3dm" };
+      }
+
+      private void clickSetLatLon(object sender, RoutedEventArgs e)
+      {
+
       }
    }
 }

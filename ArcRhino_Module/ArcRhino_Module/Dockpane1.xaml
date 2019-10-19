@@ -33,7 +33,15 @@
           </WrapPanel>
         </TextBlock.ToolTip>
       </TextBlock>
-      <Label Content="Hello World"  Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" />
+
+      <Menu>
+        <MenuItem Header="File">
+          <MenuItem Header="Set Rhino origin lat lon" Click="clickSetLatLon"/>
+          <MenuItem Header="Open Rhino file" Click="clickOpenRhinoFile"/>
+          <MenuItem Header="Import selected ArcGIS features" Click="bImport_Click"/>
+          <MenuItem Header="Push Rhino to ArcGIS" Click="bExport_Click"/>
+        </MenuItem>
+      </Menu>
     </DockPanel>
   </Grid>
 </UserControl>
