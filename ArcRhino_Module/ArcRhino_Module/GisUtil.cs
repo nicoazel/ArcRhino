@@ -8,39 +8,58 @@ using ArcGIS.Core.Data;
 using ArcGIS.Desktop.Mapping;
 using System.Windows.Forms;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
+using Rhino;
 
 namespace ArcRhino_Module
 {
    static class GisUtil
    {
-      internal static void getFirstLayer()
+      internal static void getFirstLayer(RhinoDoc rhinoDoc)
       {
          var firstLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
          var count = 0;
          var t = QueuedTask.Run(() =>
          {
-            var selectionfromMap = firstLayer.GetSelection();
-            count = selectionfromMap.GetCount();
-            MessageBox.Show($"Got layer {firstLayer.Name} with {count} selected features");
+         var selectionfromMap = firstLayer.GetSelection();
+         count = selectionfromMap.GetCount();
+         MessageBox.Show($"Got layer {firstLayer.Name} with {count} selected features");
 
-            if (count > 0)
+         if (count > 0)
+         {
+            var filter = new QueryFilter { ObjectIDs = selectionfromMap.GetObjectIDs() };
+            using (RowCursor rowCursor = firstLayer.Search(filter))
             {
-               var filter = new QueryFilter { ObjectIDs = selectionfromMap.GetObjectIDs() };
-               using (RowCursor rowCursor = firstLayer.Search(filter))
+               while (rowCursor.MoveNext())
                {
-                  while (rowCursor.MoveNext())
+                  long oid = rowCursor.Current.GetObjectID();
+                  // get the shape from the row
+                  Feature feature = rowCursor.Current as Feature;
+                  if (feature.GetShape() is Polygon polygon)
                   {
-                     long oid = rowCursor.Current.GetObjectID();
-                     // get the shape from the row
-                     Feature feature = rowCursor.Current as Feature;
-                     if (feature.GetShape() is Polygon polygon)
+                     // MessageBox.Show("FOUND A POLYGON");
+                  }
+                  if (feature.GetShape() is Polyline polyline)
+                  {
+                     var rhinoPoints = polyline.Points.ToList().Select(p => convertToRhinoPoint(p)).ToList(); ;
+                      MessageBox.Show("FOUND A POLYLINE with points:\n" + string.Join("\n", rhinoPoints.Select(p => $"{p.X}, {p.Y}, {p.Z}").ToList()));
+                     if (rhinoDoc != null)
                      {
-                        MessageBox.Show("FOUND A POLYGON");
-                     }
-                     if (feature.GetShape() is Polyline polyline)
-                     {
-                        var rhinoPoints = polyline.Points.ToList().Select(p => convertToRhinoPoint(p)).ToList(); ;
-                        MessageBox.Show("FOUND A POLYLINE with points:\n", string.Join("\n", rhinoPoints.Select(p => $"{p.X}, {p.Y}, {p.Z}").ToList()));
+                        // MessageBox.Show("ADDING POINTS TO ACTIVE RHINO DOC");
+                        rhinoPoints.ForEach(p =>
+                        {
+                           rhinoDoc.Objects.AddPoint(p);
+
+                        });
+                        var guid = rhinoDoc.Objects.AddPolyline(rhinoPoints);
+                        // rhinoDoc.Objects.AddSphere(new Rhino.Geometry.Sphere(new Rhino.Geometry.Point3d(0, 0, 0), 12));
+                        rhinoDoc.Objects.Select(guid);
+                        rhinoDoc.Views.ActiveView.ActiveViewport.ZoomExtentsSelected();
+                        rhinoDoc.Views.ActiveView.Redraw();
+
+                        } else
+                        {
+                           // MessageBox.Show("NO ACTIVE RHINO DOC");
+                        }
                        
                      }
                      if (feature.GetShape() is MapPoint point)
@@ -60,7 +79,7 @@ namespace ArcRhino_Module
 
       internal static Rhino.Geometry.Point3d convertToRhinoPoint(MapPoint p)
       {
-         return new Rhino.Geometry.Point3d(p.X, p.Y, p.Z);
+         return new Rhino.Geometry.Point3d(p.X - 1357671, p.Y - 418736, p.Z);
       }
    }
 }

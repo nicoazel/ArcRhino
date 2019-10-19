@@ -6,7 +6,7 @@ namespace ArcRhino_Module
 {
    partial class UserControl1 : UserControl
    {
-      private RhinoCore rhinoCore;
+      internal RhinoCore rhinoCore;
       /// <summary> 
       /// Required designer variable.
       /// </summary>
