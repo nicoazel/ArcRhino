@@ -89,7 +89,9 @@ namespace ArcRhino_Module
             {
                LayerIndex = layerIndex
             };
-            rhinoDoc.Objects.AddPolyline(rhinoPoints, attrs);
+            var guid = rhinoDoc.Objects.AddPolyline(rhinoPoints, attrs);
+            var obj = rhinoDoc.Objects.FindId(guid);
+            bindAttrs(obj, feature);
          }
       }
 
