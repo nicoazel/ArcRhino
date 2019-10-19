@@ -20,51 +20,31 @@ namespace ArcRhino_Module
          var count = 0;
          var t = QueuedTask.Run(() =>
          {
-         var selectionfromMap = firstLayer.GetSelection();
-         count = selectionfromMap.GetCount();
-         MessageBox.Show($"Got layer {firstLayer.Name} with {count} selected features");
+            var selectionfromMap = firstLayer.GetSelection();
+            count = selectionfromMap.GetCount();
+            MessageBox.Show($"Got layer {firstLayer.Name} with {count} selected features");
 
-         if (count > 0)
-         {
-            var filter = new QueryFilter { ObjectIDs = selectionfromMap.GetObjectIDs() };
-            using (RowCursor rowCursor = firstLayer.Search(filter))
+            if (count > 0)
             {
-               while (rowCursor.MoveNext())
+               var filter = new QueryFilter { ObjectIDs = selectionfromMap.GetObjectIDs() };
+               using (RowCursor rowCursor = firstLayer.Search(filter))
                {
-                  long oid = rowCursor.Current.GetObjectID();
-                  // get the shape from the row
-                  Feature feature = rowCursor.Current as Feature;
-                  if (feature.GetShape() is Polygon polygon)
+                  while (rowCursor.MoveNext())
                   {
-                     // MessageBox.Show("FOUND A POLYGON");
-                  }
-                  if (feature.GetShape() is Polyline polyline)
-                  {
-                     var rhinoPoints = polyline.Points.ToList().Select(p => convertToRhinoPoint(p)).ToList(); ;
-                      MessageBox.Show("FOUND A POLYLINE with points:\n" + string.Join("\n", rhinoPoints.Select(p => $"{p.X}, {p.Y}, {p.Z}").ToList()));
-                     if (rhinoDoc != null)
+                     long oid = rowCursor.Current.GetObjectID();
+                     // get the shape from the row
+                     Feature feature = rowCursor.Current as Feature;
+                     if (feature.GetShape() is Polygon polygon)
                      {
-                        // MessageBox.Show("ADDING POINTS TO ACTIVE RHINO DOC");
-                        rhinoPoints.ForEach(p =>
-                        {
-                           rhinoDoc.Objects.AddPoint(p);
-
-                        });
-                        var guid = rhinoDoc.Objects.AddPolyline(rhinoPoints);
-                        // rhinoDoc.Objects.AddSphere(new Rhino.Geometry.Sphere(new Rhino.Geometry.Point3d(0, 0, 0), 12));
-                        rhinoDoc.Objects.Select(guid);
-                        rhinoDoc.Views.ActiveView.ActiveViewport.ZoomExtentsSelected();
-                        rhinoDoc.Views.ActiveView.Redraw();
-
-                        } else
-                        {
-                           // MessageBox.Show("NO ACTIVE RHINO DOC");
-                        }
-                       
+                        convertPolygon(firstLayer, polygon, rhinoDoc);
+                     }
+                     if (feature.GetShape() is Polyline polyline)
+                     {
+                        convertPolyline(firstLayer, polyline, rhinoDoc);
                      }
                      if (feature.GetShape() is MapPoint point)
                      {
-                        MessageBox.Show("FOUND A POINT");
+                        convertPoint(firstLayer, point, rhinoDoc);
                      }
                      if (feature.GetShape() is Multipoint multiPoint)
                      {
@@ -75,6 +55,60 @@ namespace ArcRhino_Module
                }
             }
          });
+      }
+
+      private static void convertPoint(FeatureLayer featureLayer, MapPoint point, RhinoDoc rhinoDoc)
+      {
+         if (rhinoDoc != null)
+         {
+            var rhinoPoint = convertToRhinoPoint(point);
+            if (!rhinoDoc.Layers.Any(l => l.Name == featureLayer.Name))
+            {
+               rhinoDoc.Layers.Add(featureLayer.Name, System.Drawing.Color.FromArgb(0, 0, 0, 0));
+            }
+            var layerIndex = rhinoDoc.Layers.FindName(featureLayer.Name).Index;
+            var attrs = new Rhino.DocObjects.ObjectAttributes()
+            {
+               LayerIndex = layerIndex
+            };
+            rhinoDoc.Objects.AddPoint(rhinoPoint, attrs);
+         }
+      }
+
+      private static void convertPolygon(FeatureLayer featureLayer, Polygon polygon, RhinoDoc rhinoDoc)
+      {
+         if (rhinoDoc != null)
+         {
+            var rhinoPoints = polygon.Points.ToList().Select(p => convertToRhinoPoint(p)).ToList(); ;
+            if (!rhinoDoc.Layers.Any(l => l.Name == featureLayer.Name))
+            {
+               rhinoDoc.Layers.Add(featureLayer.Name, System.Drawing.Color.FromArgb(0, 0, 0, 0));
+            }
+            var layerIndex = rhinoDoc.Layers.FindName(featureLayer.Name).Index;
+            var attrs = new Rhino.DocObjects.ObjectAttributes()
+            {
+               LayerIndex = layerIndex
+            };
+            rhinoDoc.Objects.AddPolyline(rhinoPoints, attrs);
+         }
+      }
+
+      private static void convertPolyline(FeatureLayer featureLayer, Polyline polyline, RhinoDoc rhinoDoc)
+      {
+         if (rhinoDoc != null)
+         {
+            var rhinoPoints = polyline.Points.ToList().Select(p => convertToRhinoPoint(p)).ToList(); ;
+            if (!rhinoDoc.Layers.Any(l => l.Name == featureLayer.Name))
+            {
+               rhinoDoc.Layers.Add(featureLayer.Name, System.Drawing.Color.FromArgb(0, 0, 0, 0));
+            }
+            var layerIndex = rhinoDoc.Layers.FindName(featureLayer.Name).Index;
+            var attrs = new Rhino.DocObjects.ObjectAttributes()
+            {
+               LayerIndex = layerIndex
+            };
+            rhinoDoc.Objects.AddPolyline(rhinoPoints, attrs);
+         }
       }
 
       internal static Rhino.Geometry.Point3d convertToRhinoPoint(MapPoint p)

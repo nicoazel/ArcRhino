@@ -6,7 +6,7 @@ namespace ArcRhino_Module
 {
    partial class UserControl1 : UserControl
    {
-      internal RhinoCore rhinoCore;
+      internal static RhinoCore rhinoCore;
       /// <summary> 
       /// Required designer variable.
       /// </summary>
@@ -65,7 +65,8 @@ namespace ArcRhino_Module
       {
          if (rhinoCore == null)
          {
-            rhinoCore = new Rhino.Runtime.InProcess.RhinoCore(new string[] { "/NOSPLASH" }, WindowStyle.Hidden, Handle);
+            // rhinoCore = new Rhino.Runtime.InProcess.RhinoCore(new string[] { "/NOSPLASH" }, WindowStyle.Hidden, Handle);
+            rhinoCore = new Rhino.Runtime.InProcess.RhinoCore(new string[] { "/NOSPLASH" }, WindowStyle.Normal);
          }
          base.OnHandleCreated(e);
       }
