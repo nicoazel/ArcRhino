@@ -1,0 +1,388 @@
+<metadata>
+	<idinfo>
+		<citation>
+			<citeinfo>
+				<origin>Allegheny County Division of Computer Services Geographic Information Systems Group</origin>
+				<pubdate>2006</pubdate>
+				<title>Allegheny County - Contours</title>
+				<geoform Sync="TRUE">vector digital data</geoform>
+				<serinfo>
+					<sername>Base Data</sername>
+				</serinfo>
+				<pubinfo>
+					<pubplace>Pittsburgh, PA</pubplace>
+					<publish>Allegheny County Division of Computer Services Geographic Information Systems Group</publish>
+				</pubinfo>
+				<ftname Sync="TRUE">contours</ftname><onlink>http://www.pasda.psu.edu</onlink></citeinfo>
+		</citation>
+		<descript>
+			<abstract>Contour data was created as a result of a county flyover in the spring of 2004. Contours were created from a DTM Feature Dataset, upgraded by Baker and T-3 to support National Mapping Accuracy Standards (NMAS) for contours . Intermediate Contours are contours spaced at 5 foot intervals. Depression Contours are contours showing the edges and slope in a depression at 5 foot intervals. Contours are coded separately for delineation between depression and intermediate contours.</abstract>
+			<purpose>Data was developed as part of the continuing effort to establish and maintain large scale base data in support of the Geographic Information System in Allegheny County.</purpose>
+			<supplinf>Data meets or exceeds map accuracy standards in effect during the spring of 2004. Digital Globe and Michael Baker Corporation held a contract with Allegheny County to fly the County to produce digital orthophotography and to update planimetric base data for the approximate 730 square miles of Allegheny County.  Subcontractors for the project included: T3 Global Strategies, Sweet Solutions and Keystone Aerial Surveys.  Photography was produced at a scale of 1"=1600'. Mapping was stereo digitized at a scale of 1"=200'. Digital Orthophotos were included as a deliverable.</supplinf>
+			<langdata Sync="TRUE">en</langdata></descript>
+		<timeperd>
+			<timeinfo>
+				<sngdate>
+					<caldate>Spring 2004</caldate>
+				</sngdate>
+			</timeinfo>
+			<current>publication date</current>
+		</timeperd>
+		<status>
+			<progress>Complete</progress>
+			<update>As needed</update>
+		</status>
+		<spdom>
+			<bounding>
+				<westbc Sync="TRUE">-80.373621</westbc>
+				<eastbc Sync="TRUE">-79.670684</eastbc>
+				<northbc Sync="TRUE">40.687004</northbc>
+				<southbc Sync="TRUE">40.180685</southbc>
+			</bounding>
+			<lboundng><leftbc Sync="TRUE">1240861.453000</leftbc><rightbc Sync="TRUE">1431981.002200</rightbc><bottombc Sync="TRUE">319408.861000</bottombc><topbc Sync="TRUE">499007.714100</topbc></lboundng></spdom>
+		<keywords>
+			<theme>
+				<themekt>ISO 19115 Topic Categories</themekt>
+				<themekey>elevation</themekey>
+				<themekey>imageryBaseMapsEarthCover</themekey>
+			</theme>
+			<place>
+				<placekey>Allegheny County</placekey>
+				<placekey>Pittsburgh</placekey>
+				<placekey>Southwest Pennsylvania</placekey>
+			</place>
+		</keywords>
+		<accconst>Call for Details</accconst>
+		<useconst>All parties acknowledge that the data is for informational purposes only. The existing digital data is shipped as is and there is no guarantee as to its completeness or accuracy. Allegheny County Division of Computer Services Geographic Information Systems Group is not responsible for any reliance upon said data.</useconst>
+		<ptcontac>
+			<cntinfo>
+				<cntpos>GIS Manager</cntpos>
+				<cntvoice>412 350-4774</cntvoice>
+				<cntfax>412 350-4754</cntfax>
+				<cntorgp><cntorg>Allegheny County Division of Computer Services Geographic Information Systems Group</cntorg></cntorgp></cntinfo>
+		</ptcontac>
+		<native Sync="TRUE">Microsoft Windows XP Version 5.1 (Build 2600) Service Pack 2; ESRI ArcCatalog 9.1.0.722</native>
+		<crossref>
+			<citeinfo>
+				<origin>Allegheny County Division of Computer Services Geographic Information Systems Group</origin>
+			</citeinfo>
+		</crossref>
+		<natvform Sync="TRUE">Shapefile</natvform></idinfo>
+	<dataqual>
+		<attracc>
+			<attraccr>Contours accurately depict and reflect the crown and cross slope of paved areas including roads and paved ditches and accurately depict all drainage ways.  Ninety percent of all elevations from contours will have an accuracy, with respect to true elevation, of within of one half of the contour interval.  Ten percent of elevations will not be in error by more than one contour interval. The contours are created from the DTM Feature Dataset.  Contours are divided into two (2) main groups; Index Contours and Intermediate Contours.  Every fifth contour is classified as an Index Contour and has an elevation interval of a multiple of 25'.  Index Contours will be labeled with annotation displaying the elevation of the contour.  Contours will not be broken for the placement of the contour label.  The contour will be drawn through the label.  All other contours are Intermediate Contours.
+
+Where appropriate, contours are assigned an additional classification of Hidden, Obscure and Depression.  Contours that are created and fall within a building or under a bridge, as a result of creating continuous contours, are coded as Hidden.  Obscure Contours are contours that are in an area where the ground is obscured from view on the aerial photography.  Obscure Contours will also fall within an Obscure Area Boundary.  The Obscure Contours should not be considered accurate as they only give a general representation of the surface of the earth.  Depression Contours are closed contours that form a sunken area (depression).  Some depressions can cover a large area of land and may not be seen as a depression at a large scale.
+
+The contours were created using Bentely SelectCAD software and the following settings:
+"	Import Surface
+o	Thin Surface: Off
+o	Breaklines
+"	Maximum Segment Length: Off
+"	Point Density:Off
+o	Mass Points
+"	Maximum Segment Length:Off
+"	Triangulate Surface
+o	Maximum Length: 0.0
+o	Filter Tolerance: 0.0
+"	View Contours:
+o	Display As Linestring
+o	Minimum Area: 500.0
+o	Clip Contours on Steep Slopes: No
+o	Smooth: On
+</attraccr>
+		</attracc>
+		<logic>Data was subject to QA/QC process at the time it was created. Data was created as part of the County's base layer(s) update in the spring of 2004.</logic>
+		<complete>Data was created for all of Allegheny County.</complete>
+		<posacc>
+			<horizpa>
+				<horizpar>All horizontal control is to NGS Second Order Class I accuracy or better and photo control points are reported on the North American Datum (NAD) 1983 U.S. Survey Feet.  The aerial photography was captured at a negative scale of 1" = 1,600' and is sufficient to produce mapping at 1" = 200' that conforms to National Mapping Accuracy Standards (NMAS).</horizpar>
+				<qhorizpa>
+					<horizpav>+/- 5 feet</horizpav>
+				</qhorizpa>
+			</horizpa>
+			<vertacc>
+				<vertaccr>All final elevations are referenced to North American Vertical Datum (NAVD) 1988.  Orthometric heights utilize GEOID 99.  The network adheres to the Federal Geodetic Control Committee Standards (FGCS) guidelines and the final constrained adjustments were made with StarNet Least Squares Adjustment program and are acceptable by the National Geodetic Survey (NGS).</vertaccr>
+				<qvertpa></qvertpa>
+			</vertacc>
+		</posacc>
+		<lineage>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>Allegheny County Division of Computer Services Geographic Information Systems Group</origin>
+						<pubdate>2006</pubdate>
+						<title>Base Data 2004 Flyover</title>
+						<serinfo>
+							<sername>2004 Flyover</sername>
+						</serinfo>
+						<pubinfo>
+							<pubplace>Allegheny County</pubplace>
+							<publish>Allegheny County Division of Computer Services Geographic Information Systems Group</publish>
+						</pubinfo>
+						<othercit>All contours are continuous.</othercit>
+					</citeinfo>
+				</srccite>
+				<srcscale>200'</srcscale>
+				<typesrc>CD-ROM</typesrc>
+				<srctime>
+					<timeinfo>
+						<rngdates>
+							<begdate>2004</begdate>
+							<enddate>2006</enddate>
+						</rngdates>
+					</timeinfo>
+					<srccurr>publication date</srccurr></srctime>
+				<srccontr>Digital Globe and Michael Baker Corporation held a contract with Allegheny County to fly the County to produce digital orthophotography and to update planimetric base data for  Allegheny County.  Subcontractors for the project included: T3 Global Strategies, Sweet Solutions and Keystone Aerial Surveys.</srccontr></srcinfo>
+			<procstep>
+				<procdesc>Using existing County DTM files referenced to NGVD 1929 Vertical Datum, an average countywide elevation difference between the cuerrent data and the NAVD 1988 was determined. Existing DTM was shifted the averaged amount, enabling it to be updated to meet the NMAS (National Mapping Accuracy Standards) vertical accuracy requirements for 5' contour mapping.Corresponding MicroStation graphics files in stereo model units were generated. With the use of softcopy stereo workstations, each MicroStation model file of existing data was super-imposed on the corresponding stereo imagery created during this fly-over. Break lines, mass points and breaklines were updated as needed. Breaklines were captured at all slope breaks such as ridge and valley lines, roads and railroads. All hydrographic features were captured as breaklines and used in the triangulation process to ensure contour turnbacks that fit the water features. The same rules were applied to new compilation and updates.</procdesc>
+				<procdate>2004</procdate>
+			</procstep>
+			<procstep>
+				<procdesc>
+The normal mass point density of 20-25 times the contour interval may have been adjusted depending on the type of terrain being mapped. Uneven terrain requires a denser spacing than flat or gently rolling terrain. In addition spot elevations were digitized in the DTM file at the following locations:
+Road/railroad intersections
+On the road centerline at the abutment and center of bridges and similar structures
+On road centerlines over major culverts
+At the crest of closed contours
+At the lowest point of all closed depression contours, significant saddles, cuts and depressions
+At the intersection point of tributaries with the center of the main channel
+In areas of dense vegetation where the ground is visible
+</procdesc>
+			</procstep>
+			<procstep>
+				<procdesc>Following the completion of the DTM data collection, check contours were developed by the stereo operator, enabling them to be viewed with the stereo model. InRoads Software loads the features from the DTM and generates a three dimensional contour file. Spot elevations could then be added at peaks and saddles, as well as additional breaklines and mass points, if needed. When the stereo operator was satisfied with the DTM, files were provided to map editors for final contour generation and editing.</procdesc>
+			</procstep>
+			<procstep>
+				<procdesc>Tiles were created for the contour data based on the Allegheny County tiling scheme. As a sufficient backlog of completed models were generated, the DTM model files were combined for the tile, a TTN created and 3D contours generated. Contours were generated at five (5) foot intervals with a twenty-five (25) foot index. Index contours were generated at a heavier weight and were automatically labeled. All contours are continuous. They were processed with building data if available and segments within buildings and under bridges are coded as hidden. Each contour is tagged with its elevation and attributed accordingly. Before submitting tiles for translation to ArcInfo coverages, the following automated data validation processes were performed: GraphicsVerify; LineCheck; EdgeMatch.</procdesc>
+			</procstep>
+			<procstep>
+				<procdesc>ArcInfo coverages were created from MicroStation design files using in-house developed translation software. Allegheny County's Data Dictionary was used as the base upon which the ArcInfo structure was designed. Each coverage was subjected to review and inspection using ArcMap. Any revisions or corrections were performed in the MicroStation design files. After any corrections were performed, the files were re-translated, re-plotted and re-checked to confirm correct translations. ArcMap was then used to visually check the planimetric data against the digital orthophoto on a tile basis. The final QC step was to merge all tiles to verify the edgematch. Validation was done using MRF. The ESRI tool LOADDATA was used to convert coverages to the final deliverable format, the geodatabase.</procdesc>
+				<srcprod>Michael Baker Engineers</srcprod>
+			</procstep>
+			<procstep>
+				<procdesc>Data was loaded into SDE</procdesc>
+			</procstep>
+			<procstep><procdesc Sync="TRUE">Metadata imported.</procdesc><srcused Sync="TRUE">C:\DOCUME~1\t094246\LOCALS~1\Temp\xml780.tmp</srcused><date Sync="TRUE">20060830</date><time Sync="TRUE">14111300</time></procstep></lineage>
+	</dataqual>
+	<spdoinfo>
+		<direct Sync="TRUE">Vector</direct>
+		<ptvctinf><esriterm Name="BFN_Contours"><efeatyp Sync="TRUE">Simple</efeatyp><efeageom code="3" Sync="TRUE"></efeageom><esritopo Sync="TRUE">FALSE</esritopo><efeacnt Sync="TRUE">0</efeacnt><spindex Sync="TRUE">FALSE</spindex><linrefer Sync="TRUE">TRUE</linrefer></esriterm></ptvctinf></spdoinfo>
+	<spref>
+		<horizsys>
+			<planar>
+				<planci>
+					<plance Sync="TRUE">coordinate pair</plance>
+					<coordrep>
+						<absres Sync="TRUE">0.000512</absres>
+						<ordres Sync="TRUE">0.000512</ordres>
+					</coordrep>
+					<plandu Sync="TRUE">survey feet</plandu>
+				</planci>
+			</planar>
+			<geodetic>
+				<horizdn Sync="TRUE">North American Datum of 1983</horizdn>
+				<ellips Sync="TRUE">Geodetic Reference System 80</ellips>
+				<semiaxis Sync="TRUE">6378137.000000</semiaxis>
+				<denflat Sync="TRUE">298.257222</denflat>
+			</geodetic>
+			<cordsysn><geogcsn Sync="TRUE">GCS_North_American_1983</geogcsn><projcsn Sync="TRUE">NAD_1983_StatePlane_Pennsylvania_South_FIPS_3702_Feet</projcsn></cordsysn></horizsys>
+		<vertdef>
+			<altsys>
+				<altdatum>North American Vertical Datum of 1988</altdatum>
+				<altres>0.000001</altres>
+				<altunits>feet</altunits>
+				<altenc>Explicit elevation coordinate included with horizontal coordinates</altenc>
+			</altsys>
+		</vertdef>
+	</spref>
+	<eainfo>
+		<detailed Name="BFN_Contours">
+			<enttyp>
+				<enttypl Sync="TRUE">BFN_Contours</enttypl>
+				<enttypt Sync="TRUE">Feature Class</enttypt><enttypc Sync="TRUE">0</enttypc></enttyp>
+			<attr><attrlabl Sync="TRUE">FID</attrlabl><attalias Sync="TRUE">FID</attalias><attrtype Sync="TRUE">OID</attrtype><attwidth Sync="TRUE">4</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef Sync="TRUE">Internal feature number.</attrdef><attrdefs Sync="TRUE">Esri</attrdefs><attrdomv><udom Sync="TRUE">Sequential unique whole numbers that are automatically generated.</udom></attrdomv></attr><attr>
+				<attrlabl>ELEVATION</attrlabl>
+				<attalias Sync="TRUE">ELEVATION</attalias><attrtype Sync="TRUE">Integer</attrtype><attwidth Sync="TRUE">10</attwidth><atprecis Sync="TRUE">10</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>Shape</attrlabl>
+				<attrdef>Feature geometry.</attrdef>
+				<attrdefs>ESRI</attrdefs>
+				<attrdomv>
+					<udom>Coordinates defining the features.</udom>
+				</attrdomv>
+				<attrtype Sync="TRUE">Geometry</attrtype><attwidth Sync="TRUE">0</attwidth><attalias Sync="TRUE">Shape</attalias><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>FEATURECOD</attrlabl>
+				<attrdomv>
+					<edom>
+						<edomv>1310</edomv>
+						<edomvd>Intermediate Contours: Contours at a 5' interval. Elevation above Mean Sea Level (MSL)</edomvd>
+						<edomvds>Large Scale Database Quality Control Guide March 1, 1993</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>1311</edomv>
+						<edomvd>Hidden Intermediate Contours: Breaks in Contour Lines for annotation or through structures. Contours at a 5' interval. Elevation above Mean Sea Level (MSL)</edomvd>
+						<edomvds>Large Scale Database Quality Control Guide March 1, 1993</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>1320</edomv>
+						<edomvd>Intermediate Depression Contours: Depression contours at a 5' interval. Elevation above Mean Sea Level (MSL)</edomvd>
+						<edomvds>Large Scale Database Quality Control Guide March 1, 1993</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>1321</edomv>
+						<edomvd>Breaks in Contour Lines for annotation or through structures; Depression contours at a 5' interval. Elevation above Mean Sea Level (MSL)</edomvd>
+						<edomvds>Large Scale Database Quality Control Guide March 1, 1993</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>1330</edomv>
+						<edomvd>Intermediate Dense Tree Contours: Contours at a 5' interval in an area covered by natural vegetation. Elevation above Mean Sea Level (MSL)</edomvd>
+						<edomvds>Large Scale Database Quality Control Guide March 1, 1993</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>1331</edomv>
+						<edomvd>Hidden Intermediate Dense Tree Contours: Contours at a 5' interval in an area covered by natural vegetation. Elevation above Mean Sea Level (MSL). Breaks in Contour Lines for annotation or through structures</edomvd>
+						<edomvds>Large Scale Database Quality Control Guide March 1, 1993</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>1340</edomv>
+						<edomvd>Index Contours: Contours at the 25' Interval, annotated with elevations from Mean Sea Level (MSL) elevations above MSL.</edomvd>
+						<edomvds>Large Scale Database Quality Control Guide March 1, 1993</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>1341</edomv>
+						<edomvd>Hidden Index Contours: Contours at the 25' Interval, annotated with elevations from MSL, elevations above Mean Sea Level (MSL) Breaks in Contour Lines for annotation or through structures</edomvd>
+						<edomvds>Large Scale Database Quality Control Guide March 1, 1993</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>1350</edomv>
+						<edomvd>Index Depression Contours: Depression Contours at the 25' Interval, annotated with elevations from Mean Sea Level (MSL) elevations above MSL.</edomvd>
+						<edomvds>Large Scale Database Quality Control Guide March 1, 1993</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>1351</edomv>
+						<edomvd>Hidden Index Depression Contours: Depression Contours at the 25' Interval, annotated with elevations from MSL, elevations above Mean Sea Level (MSL) Breaks in Contour Lines for annotation or through structures</edomvd>
+						<edomvds>Large Scale Database Quality Control Guide March 1, 1993</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>1360</edomv>
+						<edomvd>Index Dense Tree Depression Contours: Depression Contours at the 25' Interval in areas covered by natural vegetation, annotated with elevations from MSL, elevations above Mean Sea Level (MSL)</edomvd>
+						<edomvds>Large Scale Database Quality Control Guide March 1, 1993</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>1361</edomv>
+						<edomvd>Hidden Index Dense Tree Depression Contours: Depression Contours at the 25' Interval in areas covered by natural vegetation, annotated with elevations from MSL, elevations above Mean Sea Level (MSL) Breaks in Contour Lines for annotation or through structures</edomvd>
+						<edomvds>Large Scale Database Quality Control Guide March 1, 1993</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>1370</edomv>
+						<edomvd>Intermediate Depression Dense Tree Contours: Depression Contours at the 5' Interval in areas covered by natural vegetation, elevations above Mean Sea Level (MSL)</edomvd>
+						<edomvds>Large Scale Database Quality Control Guide March 1, 1993</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>1371</edomv>
+						<edomvd>Hidden Intermediate Depression Dense Tree Contours: Depression Contours at the 5' Interval in areas covered by natural vegetation, elevations above Mean Sea Level (MSL) Breaks in Contour Lines for annotation or through structures</edomvd>
+						<edomvds>Large Scale Database Quality Control Guide March 1, 1993</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>1380</edomv>
+						<edomvd>Index Dense Tree Contours: Contours at the 25' Interval in areas covered by natural vegetation annotated with elevations from MSL, elevations above Mean Sea Level (MSL)</edomvd>
+						<edomvds>Large Scale Database Quality Control Guide March 1, 1993</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>1381</edomv>
+						<edomvd>Hidden Index Dense Tree Contours: Contours at the 25' Interval in areas covered by natural vegetation annotated with elevations from MSL, elevations above Mean Sea Level (MSL) Breaks in Contour Lines for annotation or through structures</edomvd>
+						<edomvds>Large Scale Database Quality Control Guide March 1, 1993</edomvds>
+					</edom>
+				</attrdomv>
+				<attrtype Sync="TRUE">Integer</attrtype><attwidth Sync="TRUE">10</attwidth><attalias Sync="TRUE">FEATURECOD</attalias><atprecis Sync="TRUE">10</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>UPDATE_YEA</attrlabl>
+				<attrtype Sync="TRUE">Integer</attrtype><attwidth Sync="TRUE">10</attwidth><attalias Sync="TRUE">UPDATE_YEA</attalias><atprecis Sync="TRUE">10</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>OBJECTID</attrlabl>
+				<attrtype Sync="TRUE">Integer</attrtype><attwidth Sync="TRUE">10</attwidth><attalias Sync="TRUE">OBJECTID</attalias><atprecis Sync="TRUE">10</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr><attrlabl Sync="TRUE">Shape_Leng</attrlabl><attalias Sync="TRUE">Shape_Leng</attalias><attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">19</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr></detailed>
+	</eainfo>
+	<distinfo>
+		<distrib>
+			<cntinfo>
+				<cntpos>GIS Manager</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>621 County Office Building</address>
+					<address>542 Forbes Avenue</address>
+					<city>Pittsburgh</city>
+					<state>PA</state>
+					<postal>15219-2952</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>412 350-4774</cntvoice>
+				<cntfax>412 350-4754</cntfax>
+				<cntorgp><cntorg>Allegheny County Division of Computer Services Geographic Information Systems Group</cntorg></cntorgp></cntinfo>
+		</distrib>
+		<resdesc>Call for details.</resdesc>
+		<stdorder>
+			<digform>
+				<digtinfo>
+					<transize>66.284</transize>
+					<dssize Sync="TRUE">2013.063</dssize></digtinfo>
+			</digform>
+			<ordering>Call for Details</ordering>
+		</stdorder>
+	</distinfo>
+	<metainfo>
+		<metd Sync="TRUE">20080310</metd>
+		<metrd>August, 2006</metrd>
+		<metc>
+			<cntinfo>
+				<cntpos>System Supervisor,GIS</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>621 County Office Building</address>
+					<address>524 Forbes Avenue</address>
+					<city>Pittsburgh</city>
+					<state>PA</state>
+					<postal>15219-2952</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>412 350-4774</cntvoice>
+				<cntfax>412 350-4754</cntfax>
+				<cntorgp><cntorg>Allegheny County Division of Computer Services Geographic Information Systems Group</cntorg></cntorgp></cntinfo>
+		</metc>
+		<metstdn Sync="TRUE">FGDC Content Standards for Digital Geospatial Metadata</metstdn>
+		<metstdv Sync="TRUE">FGDC-STD-001-1998</metstdv>
+		<mettc Sync="TRUE">local time</mettc>
+		<langmeta Sync="TRUE">en</langmeta></metainfo>
+	<Esri><MetaID>{C41DB526-DFE9-464C-AD94-2656220DB986}</MetaID><CreaDate>20060830</CreaDate><CreaTime>14111300</CreaTime><SyncOnce>FALSE</SyncOnce><SyncDate>20190206</SyncDate><SyncTime>23361900</SyncTime><ModDate>20190206</ModDate><ModTime>23361900</ModTime><Sync>FALSE</Sync><DataProperties><itemProps><itemName Sync="TRUE">BFN_Contours</itemName><imsContentType Sync="TRUE">002</imsContentType><itemLocation><linkage Sync="TRUE">file://\\DESKTOP-SR622JU\G\My Drive\48773 - Building Procedure\_99_Admin\Lab4 - Urban Modeling\data\Bloomfield_shp\BFN_Contours.shp</linkage><protocol Sync="TRUE">Local Area Network</protocol></itemLocation><itemSize Sync="TRUE">0.000</itemSize></itemProps><coordRef><type Sync="TRUE">Projected</type><geogcsn Sync="TRUE">GCS_North_American_1983</geogcsn><csUnits Sync="TRUE">Linear Unit: Foot_US (0.304801)</csUnits><projcsn Sync="TRUE">NAD_1983_StatePlane_Pennsylvania_South_FIPS_3702_Feet</projcsn><peXml Sync="TRUE">&lt;ProjectedCoordinateSystem xsi:type='typens:ProjectedCoordinateSystem' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:typens='http://www.esri.com/schemas/ArcGIS/2.2.0'&gt;&lt;WKT&gt;PROJCS[&amp;quot;NAD_1983_StatePlane_Pennsylvania_South_FIPS_3702_Feet&amp;quot;,GEOGCS[&amp;quot;GCS_North_American_1983&amp;quot;,DATUM[&amp;quot;D_North_American_1983&amp;quot;,SPHEROID[&amp;quot;GRS_1980&amp;quot;,6378137.0,298.257222101]],PRIMEM[&amp;quot;Greenwich&amp;quot;,0.0],UNIT[&amp;quot;Degree&amp;quot;,0.0174532925199433]],PROJECTION[&amp;quot;Lambert_Conformal_Conic&amp;quot;],PARAMETER[&amp;quot;False_Easting&amp;quot;,1968500.0],PARAMETER[&amp;quot;False_Northing&amp;quot;,0.0],PARAMETER[&amp;quot;Central_Meridian&amp;quot;,-77.75],PARAMETER[&amp;quot;Standard_Parallel_1&amp;quot;,39.93333333333333],PARAMETER[&amp;quot;Standard_Parallel_2&amp;quot;,40.96666666666667],PARAMETER[&amp;quot;Latitude_Of_Origin&amp;quot;,39.33333333333334],UNIT[&amp;quot;Foot_US&amp;quot;,0.3048006096012192],AUTHORITY[&amp;quot;EPSG&amp;quot;,2272]]&lt;/WKT&gt;&lt;XOrigin&gt;-119214200&lt;/XOrigin&gt;&lt;YOrigin&gt;-96198500&lt;/YOrigin&gt;&lt;XYScale&gt;37163717.489134133&lt;/XYScale&gt;&lt;ZOrigin&gt;-100000&lt;/ZOrigin&gt;&lt;ZScale&gt;10000&lt;/ZScale&gt;&lt;MOrigin&gt;-100000&lt;/MOrigin&gt;&lt;MScale&gt;10000&lt;/MScale&gt;&lt;XYTolerance&gt;0.0032808333333333331&lt;/XYTolerance&gt;&lt;ZTolerance&gt;0.001&lt;/ZTolerance&gt;&lt;MTolerance&gt;0.001&lt;/MTolerance&gt;&lt;HighPrecision&gt;true&lt;/HighPrecision&gt;&lt;WKID&gt;102729&lt;/WKID&gt;&lt;LatestWKID&gt;2272&lt;/LatestWKID&gt;&lt;/ProjectedCoordinateSystem&gt;</peXml></coordRef><lineage><Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Conversion Tools.tbx\FeatureClassToFeatureClass" Date="20190206" Time="182248">FeatureClassToFeatureClass "D:\GoogleDrive\48773 - Building Procedure\_05_Refrance\AlleghenyCounty_Contours2006\AlleghenyCounty_Contours2006.shp" "D:\_07_Work\EvolveFiles\18-418 Allegheny Together\18-418 Allegheny Together Mapping\Basic 3D Model Layers.gdb" Allegheny_County_Contours_2006 # "OBJECTID "OBJECTID" true true false 10 Long 0 10,First,#,D:\GoogleDrive\48773 - Building Procedure\_05_Refrance\AlleghenyCounty_Contours2006\AlleghenyCounty_Contours2006.shp,OBJECTID,-1,-1;FEATURECOD "FEATURECOD" true true false 5 Long 0 5,First,#,D:\GoogleDrive\48773 - Building Procedure\_05_Refrance\AlleghenyCounty_Contours2006\AlleghenyCounty_Contours2006.shp,FEATURECOD,-1,-1;UPDATE_YEA "UPDATE_YEA" true true false 5 Long 0 5,First,#,D:\GoogleDrive\48773 - Building Procedure\_05_Refrance\AlleghenyCounty_Contours2006\AlleghenyCounty_Contours2006.shp,UPDATE_YEA,-1,-1;ELEVATION "ELEVATION" true true false 5 Long 0 5,First,#,D:\GoogleDrive\48773 - Building Procedure\_05_Refrance\AlleghenyCounty_Contours2006\AlleghenyCounty_Contours2006.shp,ELEVATION,-1,-1" #</Process><Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Analysis Tools.tbx\Clip" Date="20190206" Time="222555">Clip "D:\Google_Drive\48773 - Building Procedure\_99_Admin\Lab4 - Urban Modeling\data\Lab Arcgis Project\Basic 3D Model Layers.gdb\Allegheny_County_Contours_2006" "D:\Google_Drive\48773 - Building Procedure\_99_Admin\Lab4 - Urban Modeling\data\Lab Arcgis Project\Lab Arcgis Project.gdb\ModelBoundary" "D:\Google_Drive\48773 - Building Procedure\_99_Admin\Lab4 - Urban Modeling\data\shp\Contours.shp" #</Process><Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Analysis Tools.tbx\Clip" Date="20190206" Time="233711">Clip Contours BloomfieldBoundary "G:\My Drive\48773 - Building Procedure\_99_Admin\Lab4 - Urban Modeling\data\Bloomfield_shp\BFN_Contours.shp" #</Process></lineage></DataProperties></Esri><dataIdInfo><envirDesc Sync="TRUE">Microsoft Windows 10 Version 10.0 (Build 17134) ; Esri ArcGIS 12.2.1.12813</envirDesc><dataLang><languageCode Sync="TRUE" value="eng"></languageCode><countryCode value="USA" Sync="TRUE"></countryCode></dataLang><idCitation><resTitle Sync="TRUE">BFN_Contours</resTitle><presForm><PresFormCd Sync="TRUE" value="005"></PresFormCd></presForm></idCitation><spatRpType><SpatRepTypCd Sync="TRUE" value="001"></SpatRepTypCd></spatRpType><dataExt><geoEle><GeoBndBox esriExtentType="native"><westBL Sync="TRUE">1240861.453</westBL><eastBL Sync="TRUE">1431981.0022</eastBL><northBL Sync="TRUE">499007.7141</northBL><southBL Sync="TRUE">319408.861</southBL><exTypeCode Sync="TRUE">1</exTypeCode></GeoBndBox></geoEle></dataExt><geoBox esriExtentType="decdegrees"><westBL Sync="TRUE">-80.373621</westBL><eastBL Sync="TRUE">-79.670684</eastBL><northBL Sync="TRUE">40.687004</northBL><southBL Sync="TRUE">40.180685</southBL><exTypeCode Sync="TRUE">1</exTypeCode></geoBox></dataIdInfo><mdLang><languageCode Sync="TRUE" value="eng"></languageCode><countryCode value="USA" Sync="TRUE"></countryCode></mdLang><mdStanName Sync="TRUE">ISO 19115 Geographic Information - Metadata</mdStanName><mdStanVer Sync="TRUE">DIS_ESRI1.0</mdStanVer><mdChar><CharSetCd Sync="TRUE" value="004"></CharSetCd></mdChar><mdHrLv><ScopeCd Sync="TRUE" value="005"></ScopeCd></mdHrLv><mdHrLvName Sync="TRUE">dataset</mdHrLvName><distInfo><distributor><distorTran><onLineSrc><orDesc Sync="TRUE">002</orDesc><linkage Sync="TRUE">file://\\GISSQL01\GISData\gisstaff\Data_Clip\Contours\contours.shp</linkage><protocol Sync="TRUE">Local Area Network</protocol></onLineSrc><transSize Sync="TRUE">2013.063</transSize></distorTran><distorFormat><formatName Sync="TRUE">Shapefile</formatName></distorFormat></distributor><distFormat><formatName Sync="TRUE">Shapefile</formatName></distFormat><distTranOps><transSize Sync="TRUE">0.000</transSize></distTranOps></distInfo><refSysInfo><RefSystem><refSysID><identCode Sync="TRUE" code="2272">NAD_1983_StatePlane_Pennsylvania_South_FIPS_3702_Feet</identCode><idCodeSpace Sync="TRUE">EPSG</idCodeSpace><idVersion Sync="TRUE">6.12(9.0.0)</idVersion></refSysID></RefSystem></refSysInfo><spatRepInfo><VectSpatRep><geometObjs Name="BFN_Contours"><geoObjTyp><GeoObjTypCd value="002" Sync="TRUE"></GeoObjTypCd></geoObjTyp><geoObjCnt Sync="TRUE">0</geoObjCnt></geometObjs><topLvl><TopoLevCd value="001" Sync="TRUE"></TopoLevCd></topLvl></VectSpatRep></spatRepInfo><mdDateSt Sync="TRUE">20190206</mdDateSt><distinfo><distliab>The USER shall indemnify, save harmless, and, if requested, defend those parties involved with the development and distribution of this data, their officers, agents, and employees from and against any suits, claims, or actions for injury, death, or property damage arising out of the use of or any defect in the FILES or any accompanying documentation. Those parties involved with the development and distribution excluded any and all implied warranties, including warranties or merchantability and fitness for a particular purpose and makes no warranty or representation, either express or implied, with respect to the FILES or accompanying documentation, including its quality, performance, merchantability, or fitness for a particular purpose. The FILES and documentation are provided "as is" and the USER assumes the entire risk as to its quality and performance. Those parties involved with the development and distribution of this data will not be liable for any direct, indirect, special, incidental, or consequential damages arising out of the use or inability to use the FILES or any accompanying documentation.</distliab><distrib><cntinfo><cntorgp><cntorg>Pennsylvania Spatial Data Access (PASDA)</cntorg></cntorgp><cntaddr><addrtype>mailing address</addrtype><address>115 Land and Water building</address><city>University Park</city><state>Pennsylvania</state><postal>16802</postal><country>United States</country></cntaddr><cntvoice>(814) 865 - 8792</cntvoice><cntemail>pasda@psu.edu</cntemail></cntinfo></distrib></distinfo></metadata>
