@@ -33,8 +33,10 @@ namespace ArcRhino_Module
       {
          WindowsFormsHost host = new WindowsFormsHost();
          Grid.SetRow(host, 1);
-         host.Child = new UserControl1();
+         var userControl = new UserControl1();
+         host.Child = userControl ;
          grid.Children.Add(host);
+         
       }
 
       private void bImport_Click(object sender, RoutedEventArgs e)
