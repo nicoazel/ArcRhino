@@ -129,6 +129,7 @@ namespace ArcRhino_Module
             {
                var name = fields[i].Name;
                var val = feature.GetOriginalValue(i);
+               // Rhino.Get
                // obj.UserDictionary[name] = val;
 
             }
