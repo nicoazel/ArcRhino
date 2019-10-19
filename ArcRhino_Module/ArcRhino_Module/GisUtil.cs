@@ -16,45 +16,49 @@ namespace ArcRhino_Module
    {
       internal static void copySelectedObjects(RhinoDoc rhinoDoc)
       {
-         var firstLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
+         var layers = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().ToList();
+         // var firstLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
          var count = 0;
-         var t = QueuedTask.Run(() =>
+         foreach (var firstLayer in layers)
          {
-            var selectionfromMap = firstLayer.GetSelection();
-            count = selectionfromMap.GetCount();
-            MessageBox.Show($"Got layer {firstLayer.Name} with {count} selected features");
-
-            if (count > 0)
+            var t = QueuedTask.Run(() =>
             {
-               var filter = new QueryFilter { ObjectIDs = selectionfromMap.GetObjectIDs() };
-               using (RowCursor rowCursor = firstLayer.Search(filter))
+               var selectionfromMap = firstLayer.GetSelection();
+               count = selectionfromMap.GetCount();
+               MessageBox.Show($"Got layer {firstLayer.Name} with {count} selected features");
+
+               if (count > 0)
                {
-                  while (rowCursor.MoveNext())
+                  var filter = new QueryFilter { ObjectIDs = selectionfromMap.GetObjectIDs() };
+                  using (RowCursor rowCursor = firstLayer.Search(filter))
                   {
-                     long oid = rowCursor.Current.GetObjectID();
-                     // get the shape from the row
-                     Feature feature = rowCursor.Current as Feature;
-                     if (feature.GetShape() is Polygon polygon)
+                     while (rowCursor.MoveNext())
                      {
-                        convertPolygon(firstLayer, feature, polygon, rhinoDoc);
+                        long oid = rowCursor.Current.GetObjectID();
+                        // get the shape from the row
+                        Feature feature = rowCursor.Current as Feature;
+                        if (feature.GetShape() is Polygon polygon)
+                        {
+                           convertPolygon(firstLayer, feature, polygon, rhinoDoc);
+                        }
+                        if (feature.GetShape() is Polyline polyline)
+                        {
+                           convertPolyline(firstLayer, feature, polyline, rhinoDoc);
+                        }
+                        if (feature.GetShape() is MapPoint point)
+                        {
+                           convertPoint(firstLayer, feature, point, rhinoDoc);
+                        }
+                        if (feature.GetShape() is Multipoint multiPoint)
+                        {
+                           MessageBox.Show("FOUND A MULTIPOINT");
+                        }
+                        MessageBox.Show("Found feature with attributes:\n" + string.Join("\n", feature.GetFields().Select(f => f.Name).ToList()));
                      }
-                     if (feature.GetShape() is Polyline polyline)
-                     {
-                        convertPolyline(firstLayer, feature, polyline, rhinoDoc);
-                     }
-                     if (feature.GetShape() is MapPoint point)
-                     {
-                        convertPoint(firstLayer, feature, point, rhinoDoc);
-                     }
-                     if (feature.GetShape() is Multipoint multiPoint)
-                     {
-                        MessageBox.Show("FOUND A MULTIPOINT");
-                     }
-                     MessageBox.Show("Found feature with attributes:\n" + string.Join("\n", feature.GetFields().Select(f => f.Name).ToList()));
                   }
                }
-            }
-         });
+            });
+         }
       }
 
       private static void convertPoint(FeatureLayer featureLayer, Feature feature, MapPoint point, RhinoDoc rhinoDoc)
