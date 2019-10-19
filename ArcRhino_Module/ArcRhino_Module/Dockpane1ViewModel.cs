@@ -43,7 +43,7 @@ namespace ArcRhino_Module
       static Dockpane1ViewModel()
       {
          RhinoInside.Resolver.Initialize();
-         MessageBox.Show("The Rhino has landed!", "ArcRhino");
+         // MessageBox.Show("The Rhino has landed!", "ArcRhino");
       }
 
       protected override void NotifyPropertyChanged([CallerMemberName] string name = "")
@@ -103,6 +103,43 @@ namespace ArcRhino_Module
    {
       protected override void OnClick()
       {
+         string objPath = "C:\\DATA\\aectech2019\\hack\\models\\cube.obj";
+         string objData = System.IO.File.ReadAllText(objPath);
+
+         load();
+
       }
+
+
+
+      async void load()
+      {
+
+         await QueuedTask.Run(() =>
+         {
+            var createOperation = new EditOperation()
+            {
+               Name = "Generate mesh"
+            };
+
+            var mercatorSR = SpatialReferenceBuilder.CreateSpatialReference(3857);
+            var vertices = new List<Coordinate2D>();
+            vertices.Add(new Coordinate2D(-13046167.65, 4036393.78));
+            vertices.Add(new Coordinate2D(-13046167.65, 4036404.5));
+            vertices.Add(new Coordinate2D(-13046161.693, 4036404.5));
+            vertices.Add(new Coordinate2D(-13046161.693, 4036393.78));
+            var polygon = PolygonBuilder.CreatePolygon(vertices, mercatorSR);
+            
+            var layer = MapView.Active.Map.GetLayersAsFlattenedList().FirstOrDefault();
+            createOperation.Create(layer, polygon);
+
+            createOperation.Execute();
+
+            MessageBox.Show("Done!");
+
+         });
+      }
+
+
    }
 }
