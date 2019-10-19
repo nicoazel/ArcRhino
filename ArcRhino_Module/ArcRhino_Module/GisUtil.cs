@@ -17,16 +17,13 @@ namespace ArcRhino_Module
       internal static void copySelectedObjects(RhinoDoc rhinoDoc)
       {
          var layers = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().ToList();
-         // var firstLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
-         var count = 0;
          foreach (var firstLayer in layers)
          {
             var t = QueuedTask.Run(() =>
             {
                var selectionfromMap = firstLayer.GetSelection();
-               count = selectionfromMap.GetCount();
-               MessageBox.Show($"Got layer {firstLayer.Name} with {count} selected features");
-
+               var count = selectionfromMap.GetCount();
+               // MessageBox.Show($"Got layer {firstLayer.Name} with {count} selected features");
                if (count > 0)
                {
                   var filter = new QueryFilter { ObjectIDs = selectionfromMap.GetObjectIDs() };
@@ -53,7 +50,7 @@ namespace ArcRhino_Module
                         {
                            MessageBox.Show("FOUND A MULTIPOINT");
                         }
-                        MessageBox.Show("Found feature with attributes:\n" + string.Join("\n", feature.GetFields().Select(f => f.Name).ToList()));
+                        // MessageBox.Show("Found feature with attributes:\n" + string.Join("\n", feature.GetFields().Select(f => f.Name).ToList()));
                      }
                   }
                }
