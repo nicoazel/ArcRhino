@@ -11,3 +11,6 @@ C:\Users\470\Documents\GitHub\ArcRhino\ArcRhino_Module\ArcRhino_Module\obj\Debug
 C:\Users\470\Documents\GitHub\ArcRhino\ArcRhino_Module\ArcRhino_Module\obj\Debug\ArcRhino_Module.csproj.CopyComplete
 C:\Users\470\Documents\GitHub\ArcRhino\ArcRhino_Module\ArcRhino_Module\obj\Debug\ArcRhino_Module.dll
 C:\Users\470\Documents\GitHub\ArcRhino\ArcRhino_Module\ArcRhino_Module\obj\Debug\ArcRhino_Module.pdb
+C:\Users\470\Documents\GitHub\ArcRhino\ArcRhino_Module\ArcRhino_Module\obj\Debug\ArcRhino_Module.Form1.resources
+C:\Users\470\Documents\GitHub\ArcRhino\ArcRhino_Module\ArcRhino_Module\obj\Debug\ArcRhino_Module.csproj.GenerateResource.cache
+C:\Users\470\Documents\GitHub\ArcRhino\ArcRhino_Module\ArcRhino_Module\obj\Debug\ArcRhino_Module.UserControl1.resources

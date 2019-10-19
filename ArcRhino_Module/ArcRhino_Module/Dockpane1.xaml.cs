@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rhino.Runtime.InProcess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Forms.Integration;
 
 
 namespace ArcRhino_Module
@@ -21,9 +23,18 @@ namespace ArcRhino_Module
    /// </summary>
    public partial class Dockpane1View : UserControl
    {
+
       public Dockpane1View()
       {
          InitializeComponent();
+      }
+
+      private void UserControl_Loaded(object sender, RoutedEventArgs e)
+      {
+         WindowsFormsHost host = new WindowsFormsHost();
+         Grid.SetRow(host, 1);
+         host.Child = new UserControl1();
+         grid.Children.Add(host);
       }
    }
 }

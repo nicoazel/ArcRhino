@@ -24,7 +24,7 @@ namespace ArcRhino_Module
    {
       private const string _dockPaneID = "ArcRhino_Module_Dockpane1";
       private const string _menuID = "ArcRhino_Module_Dockpane1_Menu";
-      RhinoCore _rhinoCore;
+      
 
       protected Dockpane1ViewModel() { }
 

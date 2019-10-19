@@ -8,7 +8,7 @@
              xmlns:controls="clr-namespace:ArcGIS.Desktop.Framework.Controls;assembly=ArcGIS.Desktop.Framework"                       
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
-             d:DataContext="{Binding Path=ui.Dockpane1ViewModel}">
+             d:DataContext="{Binding Path=ui.Dockpane1ViewModel}" Loaded="UserControl_Loaded">
   <UserControl.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
@@ -16,7 +16,7 @@
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </UserControl.Resources>
-  <Grid>
+  <Grid x:Name="grid">
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
@@ -35,6 +35,5 @@
       </TextBlock>
       <Label Content="Hello World"  Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" />
     </DockPanel>
-    <Viewbox Margin="10" Grid.Row="1"/>
   </Grid>
 </UserControl>
