@@ -43,7 +43,7 @@ namespace ArcRhino_Module
       static Dockpane1ViewModel()
       {
          RhinoInside.Resolver.Initialize();
-         MessageBox.Show("The Rhino has landed!", "ArcRhino");
+         //MessageBox.Show("The Rhino has landed!", "ArcRhino");
       }
 
       protected override void NotifyPropertyChanged([CallerMemberName] string name = "")
@@ -122,13 +122,24 @@ namespace ArcRhino_Module
                Name = "Generate mesh"
             };
 
+            // meant to work only on layer which has 3857 projection system
+            // with feature class support for polygons
+
+            // Create a spatial reference using the WKID (well-known ID) 
+            // for the Web Mercator coordinate system.
             var mercatorSR = SpatialReferenceBuilder.CreateSpatialReference(3857);
-            var vertices = new List<Coordinate2D>();
-            vertices.Add(new Coordinate2D(-100, -30));
-            vertices.Add(new Coordinate2D(-100, 80));
-            vertices.Add(new Coordinate2D(70, 80));
-            vertices.Add(new Coordinate2D(70, -30));
-            var polygon = PolygonBuilder.CreatePolygon(vertices, mercatorSR);
+
+            // Use the builder to create points that will become vertices.
+            var corner1Point = MapPointBuilder.CreateMapPoint(-1000000, -300000, mercatorSR);
+            var corner2Point = MapPointBuilder.CreateMapPoint(-1000000, 800000, mercatorSR);
+            var corner3Point = MapPointBuilder.CreateMapPoint(700000, 800000, mercatorSR);
+            var corner4Point = MapPointBuilder.CreateMapPoint(700000, -300000, mercatorSR);
+
+            // Create a list of all map points describing the polygon vertices.
+            var points = new List<MapPoint>() { corner1Point, corner2Point, corner3Point, corner4Point };
+
+            // use the builder to create the polygon container
+            var polygon = new PolygonBuilder(points).ToGeometry();
 
             var layer = MapView.Active.Map.GetLayersAsFlattenedList().FirstOrDefault();
             createOperation.Create(layer, polygon);
