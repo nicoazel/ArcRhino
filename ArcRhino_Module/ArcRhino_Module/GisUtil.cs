@@ -16,6 +16,7 @@ namespace ArcRhino_Module
    {
       internal static void copySelectedObjects(RhinoDoc rhinoDoc)
       {
+         if (rhinoDoc == null) return;
          var layers = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().ToList();
          foreach (var firstLayer in layers)
          {
@@ -48,7 +49,7 @@ namespace ArcRhino_Module
                         }
                         if (feature.GetShape() is Multipoint multiPoint)
                         {
-                           MessageBox.Show("FOUND A MULTIPOINT");
+                           // MessageBox.Show("FOUND A MULTIPOINT");
                         }
                         // MessageBox.Show("Found feature with attributes:\n" + string.Join("\n", feature.GetFields().Select(f => f.Name).ToList()));
                      }
@@ -60,64 +61,62 @@ namespace ArcRhino_Module
 
       private static void convertPoint(FeatureLayer featureLayer, Feature feature, MapPoint point, RhinoDoc rhinoDoc)
       {
-         if (rhinoDoc != null)
+
+         var rhinoPoint = convertToRhinoPoint(point);
+         if (!rhinoDoc.Layers.Any(l => l.Name == featureLayer.Name))
          {
-            var rhinoPoint = convertToRhinoPoint(point);
-            if (!rhinoDoc.Layers.Any(l => l.Name == featureLayer.Name))
-            {
-               rhinoDoc.Layers.Add(featureLayer.Name, System.Drawing.Color.FromArgb(0, 0, 0, 0));
-            }
-            var layerIndex = rhinoDoc.Layers.FindName(featureLayer.Name).Index;
-            var attrs = new Rhino.DocObjects.ObjectAttributes()
-            {
-               LayerIndex = layerIndex
-            };
-            rhinoDoc.Objects.AddPoint(rhinoPoint, attrs);
+            rhinoDoc.Layers.Add(featureLayer.Name, System.Drawing.Color.FromArgb(0, 0, 0, 0));
          }
+         var layerIndex = rhinoDoc.Layers.FindName(featureLayer.Name).Index;
+         var attrs = new Rhino.DocObjects.ObjectAttributes()
+         {
+            LayerIndex = layerIndex
+         };
+         var guid = rhinoDoc.Objects.AddPoint(rhinoPoint, attrs);
+         var obj = rhinoDoc.Objects.FindId(guid);
+         bindAttrs(obj, feature);
       }
 
       private static void convertPolygon(FeatureLayer featureLayer, Feature feature, Polygon polygon, RhinoDoc rhinoDoc)
       {
-         if (rhinoDoc != null)
+
+         var rhinoPoints = polygon.Points.ToList().Select(p => convertToRhinoPoint(p)).ToList(); ;
+         if (!rhinoDoc.Layers.Any(l => l.Name == featureLayer.Name))
          {
-            var rhinoPoints = polygon.Points.ToList().Select(p => convertToRhinoPoint(p)).ToList(); ;
-            if (!rhinoDoc.Layers.Any(l => l.Name == featureLayer.Name))
-            {
-               rhinoDoc.Layers.Add(featureLayer.Name, System.Drawing.Color.FromArgb(0, 0, 0, 0));
-            }
-            var layerIndex = rhinoDoc.Layers.FindName(featureLayer.Name).Index;
-            var attrs = new Rhino.DocObjects.ObjectAttributes()
-            {
-               LayerIndex = layerIndex
-            };
-            var guid = rhinoDoc.Objects.AddPolyline(rhinoPoints, attrs);
-            var obj = rhinoDoc.Objects.FindId(guid);
-            bindAttrs(obj, feature);
+            rhinoDoc.Layers.Add(featureLayer.Name, System.Drawing.Color.FromArgb(0, 0, 0, 0));
          }
+         var layerIndex = rhinoDoc.Layers.FindName(featureLayer.Name).Index;
+         var attrs = new Rhino.DocObjects.ObjectAttributes()
+         {
+            LayerIndex = layerIndex
+         };
+         var guid = rhinoDoc.Objects.AddPolyline(rhinoPoints, attrs);
+         var obj = rhinoDoc.Objects.FindId(guid);
+         bindAttrs(obj, feature);
+
       }
 
       private static void convertPolyline(FeatureLayer featureLayer, Feature feature, Polyline polyline, RhinoDoc rhinoDoc)
       {
-         if (rhinoDoc != null)
+
+         var rhinoPoints = polyline.Points.ToList().Select(p => convertToRhinoPoint(p)).ToList(); ;
+         if (!rhinoDoc.Layers.Any(l => l.Name == featureLayer.Name))
          {
-            var rhinoPoints = polyline.Points.ToList().Select(p => convertToRhinoPoint(p)).ToList(); ;
-            if (!rhinoDoc.Layers.Any(l => l.Name == featureLayer.Name))
-            {
-               rhinoDoc.Layers.Add(featureLayer.Name, System.Drawing.Color.FromArgb(0, 0, 0, 0));
-            }
-            var layerIndex = rhinoDoc.Layers.FindName(featureLayer.Name).Index;
-            feature.GetFields();
-            var dict = new Rhino.Collections.ArchivableDictionary();
-
-            var attrs = new Rhino.DocObjects.ObjectAttributes()
-            {
-               LayerIndex = layerIndex
-            };
-
-            var guid = rhinoDoc.Objects.AddPolyline(rhinoPoints, attrs);
-            var obj = rhinoDoc.Objects.FindId(guid);
-            bindAttrs(obj, feature);
+            rhinoDoc.Layers.Add(featureLayer.Name, System.Drawing.Color.FromArgb(0, 0, 0, 0));
          }
+         var layerIndex = rhinoDoc.Layers.FindName(featureLayer.Name).Index;
+         feature.GetFields();
+         var dict = new Rhino.Collections.ArchivableDictionary();
+
+         var attrs = new Rhino.DocObjects.ObjectAttributes()
+         {
+            LayerIndex = layerIndex
+         };
+
+         var guid = rhinoDoc.Objects.AddPolyline(rhinoPoints, attrs);
+         var obj = rhinoDoc.Objects.FindId(guid);
+         bindAttrs(obj, feature);
+
       }
 
       private static void bindAttrs(Rhino.DocObjects.RhinoObject obj, Feature feature)
@@ -129,8 +128,8 @@ namespace ArcRhino_Module
             {
                var name = fields[i].Name;
                var val = feature.GetOriginalValue(i);
-               // Rhino.Get
-               // obj.UserDictionary[name] = val;
+               // MessageBox.Show($"Setting {name}: {val.ToString()}");
+               obj.Attributes.SetUserString(name, val.ToString());
 
             }
             catch
@@ -148,32 +147,3 @@ namespace ArcRhino_Module
       }
    }
 }
-
-
-
-/*
-var selectionfromMap = firstLayer.GetSelection();
-
-ArcGIS.Core.Data.QueryFilter filter = new ArcGIS.Core.Data.QueryFilter
-{
-   ObjectIDs = selectionfromMap.GetObjectIDs();
-        };
-
-        // get the row
-        using (ArcGIS.Core.Data.RowCursor rowCursor = featureClass.Search(filter, false))
-        {
-          while (rowCursor.MoveNext())
-          {
-            long oid = rowCursor.Current.GetObjectID();
-
-// get the shape from the row
-ArcGIS.Core.Data.Feature feature = rowCursor.Current as ArcGIS.Core.Data.Feature;
-Polygon polygon = feature.GetShape() as Polygon;
-
-// get the attribute from the row (assume it's a double field)
-double value = (double)rowCursor.Current.GetOriginalValue(fldIndex);
-
-            // do something here
-          }
-        }
-        */
