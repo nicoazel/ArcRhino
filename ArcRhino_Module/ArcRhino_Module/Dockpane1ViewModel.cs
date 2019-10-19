@@ -103,6 +103,43 @@ namespace ArcRhino_Module
    {
       protected override void OnClick()
       {
+         string objPath = "C:\\DATA\\aectech2019\\hack\\models\\cube.obj";
+         string objData = System.IO.File.ReadAllText(objPath);
+
+         load();
+
       }
+
+
+
+      async void load()
+      {
+
+         await QueuedTask.Run(() =>
+         {
+            var createOperation = new EditOperation()
+            {
+               Name = "Generate mesh"
+            };
+
+            var mercatorSR = SpatialReferenceBuilder.CreateSpatialReference(3857);
+            var vertices = new List<Coordinate2D>();
+            vertices.Add(new Coordinate2D(-100, -30));
+            vertices.Add(new Coordinate2D(-100, 80));
+            vertices.Add(new Coordinate2D(70, 80));
+            vertices.Add(new Coordinate2D(70, -30));
+            var polygon = PolygonBuilder.CreatePolygon(vertices, mercatorSR);
+
+            var layer = MapView.Active.Map.GetLayersAsFlattenedList().FirstOrDefault();
+            createOperation.Create(layer, polygon);
+
+            createOperation.Execute();
+
+            MessageBox.Show("Done!");
+
+         });
+      }
+
+
    }
 }
