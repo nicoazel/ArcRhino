@@ -9,7 +9,18 @@ using ArcGIS.Desktop.Mapping;
 using System.Windows.Forms;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
 using Rhino;
-
+using Rhino.Runtime.InProcess;
+using ArcGIS.Core.CIM;
+using ArcGIS.Core.Data;
+using ArcGIS.Core.Geometry;
+using ArcGIS.Desktop.Catalog;
+using ArcGIS.Desktop.Core;
+using ArcGIS.Desktop.Editing;
+using ArcGIS.Desktop.Extensions;
+using ArcGIS.Desktop.Framework;
+using ArcGIS.Desktop.Framework.Contracts;
+using ArcGIS.Desktop.Framework.Dialogs;
+using ArcGIS.Desktop.Mapping;
 namespace ArcRhino_Module
 {
    static class GisUtil
@@ -145,5 +156,91 @@ namespace ArcRhino_Module
       {
          return new Rhino.Geometry.Point3d(p.X - 1357671, p.Y - 418736, p.Z);
       }
+<<<<<<< Updated upstream
    }
 }
+=======
+   
+    
+        private static void pushLayerToMap(RhinoDoc rhinoDoc)
+        {
+            if (rhinoDoc != null)
+            {
+                Rhino.DocObjects.ObjRef []obref;
+                Rhino.Commands.Result rc = Rhino.Input.RhinoGet.GetMultipleObjects("Select object", true, Rhino.DocObjects.ObjectType.AnyObject, out obref);
+                
+                foreach (var obj in obref){
+                    Rhino.DocObjects.RhinoObject rhobj = obj.Object();
+                    int layerIndex = rhobj.Attributes.LayerIndex;
+                    string layerName = rhinoDoc.Layers[layerIndex].Name;
+                    load();
+
+                    
+                
+
+ 
+            }
+        }// end push layer to map
+        async void load()
+            {
+                await QueuedTask.Run(() =>
+                {
+                    var createOperation = new EditOperation()
+                    {
+                        Name = "Generate mesh"
+                    };
+
+                    var mercatorSR = SpatialReferenceBuilder.CreateSpatialReference(3857);
+                    var vertices = new List<Coordinate2D>();
+                    vertices.Add(new Coordinate2D(-100, -30));
+                    vertices.Add(new Coordinate2D(-100, 80));
+                    vertices.Add(new Coordinate2D(70, 80));
+                    vertices.Add(new Coordinate2D(70, -30));
+                    var polygon = PolygonBuilder.CreatePolygon(vertices, mercatorSR);
+
+                    //var layer = MapView.Active.Map.GetLayersAsFlattenedList().FirstOrDefault();
+
+                    MapView.Active.Map.Layers.IndexOf()
+
+                    createOperation.Create(layer, polygon);
+
+                    createOperation.Execute();
+
+                    MessageBox.Show("Done!");
+                });
+            }
+
+
+
+    }
+}
+
+
+
+/*
+var selectionfromMap = firstLayer.GetSelection();
+
+ArcGIS.Core.Data.QueryFilter filter = new ArcGIS.Core.Data.QueryFilter
+{
+   ObjectIDs = selectionfromMap.GetObjectIDs();
+        };
+
+        // get the row
+        using (ArcGIS.Core.Data.RowCursor rowCursor = featureClass.Search(filter, false))
+        {
+          while (rowCursor.MoveNext())
+          {
+            long oid = rowCursor.Current.GetObjectID();
+
+// get the shape from the row
+ArcGIS.Core.Data.Feature feature = rowCursor.Current as ArcGIS.Core.Data.Feature;
+Polygon polygon = feature.GetShape() as Polygon;
+
+// get the attribute from the row (assume it's a double field)
+double value = (double)rowCursor.Current.GetOriginalValue(fldIndex);
+
+            // do something here
+          }
+        }
+        */
+>>>>>>> Stashed changes

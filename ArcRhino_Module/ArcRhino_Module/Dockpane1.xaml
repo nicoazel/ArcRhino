@@ -41,6 +41,7 @@
           <MenuItem Header="Import selected ArcGIS features" Click="bImport_Click"/>
           <MenuItem Header="Push Rhino to ArcGIS" Click="bExport_Click"/>
           <MenuItem Header="Zoom Extents" Click="clickZoomExtents"/>
+          <MenuItem Header="Push to Map" Click="pushToMap"/>
         </MenuItem>
       </Menu>
     </DockPanel>
