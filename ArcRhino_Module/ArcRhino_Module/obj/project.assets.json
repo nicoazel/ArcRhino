@@ -359,20 +359,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\470\\.nuget\\packages\\": {}
+    "C:\\Users\\ANambiar\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\470\\Documents\\GitHub\\ArcRhino\\ArcRhino_Module\\ArcRhino_Module\\ArcRhino_Module.csproj",
+      "projectUniqueName": "C:\\DATA\\aectech2019\\hack\\ArcRhino\\ArcRhino_Module\\ArcRhino_Module\\ArcRhino_Module.csproj",
       "projectName": "ArcRhino_Module",
-      "projectPath": "C:\\Users\\470\\Documents\\GitHub\\ArcRhino\\ArcRhino_Module\\ArcRhino_Module\\ArcRhino_Module.csproj",
-      "packagesPath": "C:\\Users\\470\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\470\\Documents\\GitHub\\ArcRhino\\ArcRhino_Module\\ArcRhino_Module\\obj\\",
+      "projectPath": "C:\\DATA\\aectech2019\\hack\\ArcRhino\\ArcRhino_Module\\ArcRhino_Module\\ArcRhino_Module.csproj",
+      "packagesPath": "C:\\Users\\ANambiar\\.nuget\\packages\\",
+      "outputPath": "C:\\DATA\\aectech2019\\hack\\ArcRhino\\ArcRhino_Module\\ArcRhino_Module\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "configFilePaths": [
-        "C:\\Users\\470\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ANambiar\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
