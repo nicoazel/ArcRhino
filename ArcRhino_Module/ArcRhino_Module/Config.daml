@@ -1,0 +1,50 @@
+﻿<ArcGIS defaultAssembly="ArcRhino_Module.dll" defaultNamespace="ArcRhino_Module" xmlns="http://schemas.esri.com/DADF/Registry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Program%20Files/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
+  <AddInInfo id="{c303b545-47f8-4102-b138-c6cc83c79b12}" version="1.0" desktopVersion="2.4.19948">
+    <Name>ArcRhino_Module</Name>
+    <Description>ArcRhino_Module description</Description>
+    <Image>Images\AddinDesktop32.png</Image>
+    <Author>nicol</Author>
+    <Company>Acme</Company>
+    <Date>10/19/2019 12:31:23 PM, 2019</Date>
+    <Subject>Framework</Subject>
+    <!-- Note subject can be one or more of these topics:
+                    Content, Framework, Editing, Geodatabase, Geometry, Geoprocessing, Layouts, Map Authoring, Map Exploration -->
+  </AddInInfo>
+  <modules>
+    <insertModule id="ArcRhino_Module_Module" className="Module1" autoLoad="false" caption="Module1">
+      <!-- uncomment to have the control hosted on a separate tab-->
+      <tabs>
+        <!--<tab id="ArcRhino_Module_Tab1" caption="New Tab">
+          <group refID="ArcRhino_Module_Group1"/>
+        </tab>-->
+      </tabs>
+      <groups>
+        <!-- comment this out if you have no controls on the Addin tab to avoid
+              an empty group-->
+        <group id="ArcRhino_Module_Group1" caption="Group 1" appearsOnAddInTab="true">
+          <!-- host controls within groups -->
+          <button refID="ArcRhino_Module_Dockpane1_ShowButton" size="large" />
+        </group>
+      </groups>
+      <controls>
+        <!-- add your controls here -->
+        <button id="ArcRhino_Module_Dockpane1_ShowButton" caption="Show Dockpane 1" className="Dockpane1_ShowButton" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
+          <tooltip heading="Show Dockpane">Show Dockpane<disabledText /></tooltip>
+        </button>
+        <button id="ArcRhino_Module_Dockpane1_MenuButton" caption="Burger Menu Button" className="Dockpane1_MenuButton" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
+          <tooltip heading="Burger Menu Button">ToolTip<disabledText /></tooltip>
+        </button>
+      </controls>
+      <dockPanes>
+        <dockPane id="ArcRhino_Module_Dockpane1" caption="Dockpane 1" className="Dockpane1ViewModel" dock="group" dockWith="esri_core_contentsDockPane">
+          <content className="Dockpane1View" />
+        </dockPane>
+      </dockPanes>
+      <menus>
+        <menu id="ArcRhino_Module_Dockpane1_Menu" caption="Options" contextMenu="true">
+          <button refID="ArcRhino_Module_Dockpane1_MenuButton" />
+        </menu>
+      </menus>
+    </insertModule>
+  </modules>
+</ArcGIS>
