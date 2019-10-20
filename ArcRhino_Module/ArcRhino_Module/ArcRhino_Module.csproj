@@ -133,6 +133,7 @@
       <DependentUpon>Dockpane1.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dockpane1ViewModel.cs" />
+    <Compile Include="GhUtil.cs" />
     <Compile Include="GisUtil.cs" />
     <Compile Include="Module1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -184,6 +185,12 @@
   <ItemGroup>
     <AddInContent Include="Images\rhino16.png" />
     <AddInContent Include="Images\rhino32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ArcRhino_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ArcRhino.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!--
