@@ -1,7 +1,10 @@
 ﻿using Rhino;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms.Integration;
+using ArcGIS.Desktop.Framework.Threading.Tasks;
+using ArcGIS.Desktop.Mapping;
 using Microsoft.Win32;
 
 namespace ArcRhino_Module
@@ -29,7 +32,28 @@ namespace ArcRhino_Module
 
       private void bExport_Click(object sender, RoutedEventArgs e)
       {
+         var t = QueuedTask.Run(() =>
+         {
+            if (rhinoDoc != null)
+            {
+               Rhino.DocObjects.ObjRef[] obref;
+               Rhino.Commands.Result rc = Rhino.Input.RhinoGet.GetMultipleObjects("Select object", true, Rhino.DocObjects.ObjectType.AnyObject, out obref);
 
+               foreach (var obj in obref)
+               {
+
+                  Rhino.DocObjects.RhinoObject rhobj = obj.Object();
+                  int layerIndex = rhobj.Attributes.LayerIndex;
+                  string layerName = rhinoDoc.Layers[layerIndex].Name;
+                  MessageBox.Show($"Got layer {layerName} with selected features");
+                  var thisLayer = MapView.Active.Map.FindLayers(layerName).FirstOrDefault() as BasicFeatureLayer;
+                  var projection = thisLayer.GetSpatialReference();
+
+                  RhinoUtil.ThrowItOverTheFence(thisLayer, obj.Object());
+
+               }//end for each
+            }// end push layer to map
+         });
       }
 
       private void clickOpenRhinoFile(object sender, RoutedEventArgs e)
