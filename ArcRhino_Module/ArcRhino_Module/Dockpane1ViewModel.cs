@@ -18,6 +18,7 @@ using ArcGIS.Desktop.Framework.Threading.Tasks;
 using ArcGIS.Desktop.Mapping;
 
 using Rhino;
+using Rhino.Geometry;
 using Rhino.DocObjects;
 using Rhino.Runtime.InProcess;
 
@@ -133,7 +134,39 @@ namespace ArcRhino_Module
                   }
                case ObjectType.Surface:
                   {
+                     Surface srf = ro.Geometry as Surface;
+                     if (!srf.IsPlanar())
+                     {
+                        Console.Out.WriteLine($"Unable to send non-planar surfaces: Guid: ${ro.Id}");
+                        break;
+                     }
 
+                     var createOperation = new EditOperation();
+
+
+                     // meant to work only on layer which has 3857 projection system
+                     // with feature class support for polygons
+
+                     // Create a spatial reference using the WKID (well-known ID) 
+                     // for the Web Mercator coordinate system.
+                     var mercatorSR = SpatialReferenceBuilder.CreateSpatialReference(3857);
+
+                     // Create a list of all map points describing the polygon vertices.
+                     var points = new List<MapPoint>();
+
+                     foreach (BrepVertex vt in srf.ToBrep().Vertices)
+                     {
+                        MapPoint mp = MapPointBuilder.CreateMapPoint(vt.Location.X, vt.Location.Z, mercatorSR);
+                        points.Add(mp);
+                     }
+
+                     // use the builder to create the polygon container
+                     var polygon = new PolygonBuilder(points).ToGeometry();
+
+                     var layer = MapView.Active.Map.GetLayersAsFlattenedList().FirstOrDefault();
+                     createOperation.Create(layer, polygon);
+
+                     createOperation.ExecuteAsync();
                      break;
                   }
                case ObjectType.Curve:
