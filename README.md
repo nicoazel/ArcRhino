@@ -1,7 +1,7 @@
 
 ![ArcRhino](https://raw.githubusercontent.com/nicoazel/ArcRhino/master/Presentation%20Materials/ArcRhino_Name_Icon.PNG)
 
-An AECTech Hackothon Rhino.Inside project for ESRI ArcGIS Pro
+An AECTech Hackathon Rhino.Inside project for ESRI ArcGIS Pro
 
 [![Watch the video](https://github.com/nicoazel/ArcRhino/blob/master/Presentation%20Materials/Video%20frame.png)](https://vimeo.com/367573952)
 
