@@ -121,79 +121,80 @@ namespace ArcRhino_Module
 
       async void ThrowItOverTheFence(RhinoObject ro)
       {
-         List<Mesh> meshes = new List<Mesh>();
+         Mesh mesh = null;
 
          await QueuedTask.Run(() =>
          {
-         switch (ro.Geometry.ObjectType)
-         {
-            case ObjectType.Point:
-               {
-
-                  break;
-               }
-            case ObjectType.Surface:
-               {
-                  Surface srf = ro.Geometry as Surface;
-                  if (!srf.IsPlanar())
+            switch (ro.Geometry.ObjectType)
+            {
+               case ObjectType.Point:
                   {
-                     Console.Out.WriteLine($"Unable to send non-planar surfaces: Guid: ${ro.Id}");
+
                      break;
                   }
-
-                  var createOperation = new EditOperation();
-
-                  // meant to work only on layer which has 3857 projection system
-                  // with feature class support for polygons
-
-                  // Create a spatial reference using the WKID (well-known ID) 
-                  // for the Web Mercator coordinate system.
-                  var mercatorSR = SpatialReferenceBuilder.CreateSpatialReference(3857);
-
-                  // Create a list of all map points describing the polygon vertices.
-                  var points = new List<MapPoint>();
-
-                  foreach (BrepVertex vt in srf.ToBrep().Vertices)
+               case ObjectType.Surface:
                   {
-                     MapPoint mp = MapPointBuilder.CreateMapPoint(vt.Location.X, vt.Location.Z, mercatorSR);
-                     points.Add(mp);
+                     Surface srf = ro.Geometry as Surface;
+                     if (!srf.IsPlanar())
+                     {
+                        Console.Out.WriteLine($"Unable to send non-planar surfaces: Guid: ${ro.Id}");
+                        break;
+                     }
+
+                     var createOperation = new EditOperation();
+
+                     // meant to work only on layer which has 3857 projection system
+                     // with feature class support for polygons
+
+                     // Create a spatial reference using the WKID (well-known ID) 
+                     // for the Web Mercator coordinate system.
+                     var mercatorSR = SpatialReferenceBuilder.CreateSpatialReference(3857);
+
+                     // Create a list of all map points describing the polygon vertices.
+                     var points = new List<MapPoint>();
+
+                     foreach (BrepVertex vt in srf.ToBrep().Vertices)
+                     {
+                        MapPoint mp = MapPointBuilder.CreateMapPoint(vt.Location.X, vt.Location.Z, mercatorSR);
+                        points.Add(mp);
+                     }
+
+                     // use the builder to create the polygon container
+                     var polygon = new PolygonBuilder(points).ToGeometry();
+
+                     var layer = MapView.Active.Map.GetLayersAsFlattenedList().FirstOrDefault();
+                     createOperation.Create(layer, polygon);
+
+                     createOperation.ExecuteAsync();
+                     break;
                   }
+               case ObjectType.Curve:
+                  {
 
-                  // use the builder to create the polygon container
-                  var polygon = new PolygonBuilder(points).ToGeometry();
-
-                  var layer = MapView.Active.Map.GetLayersAsFlattenedList().FirstOrDefault();
-                  createOperation.Create(layer, polygon);
-
-                  createOperation.ExecuteAsync();
-                  break;
+                     break;
+                  }
+               case ObjectType.Brep:
+                  {
+                     if ((ro.Geometry as Brep).IsSurface) goto case ObjectType.Surface;
+                     mesh = Mesh.CreateFromBrep(ro.Geometry as Brep, MeshingParameters.Default)[0];
+                     goto case ObjectType.Mesh;
+                  }
+               case ObjectType.Extrusion:
+                  {
+                     mesh = (ro.Geometry as Extrusion).GetMesh(MeshType.Default);
+                     goto case ObjectType.Mesh;
+                  }
+               case ObjectType.Mesh:
+                  {
+                     mesh = (mesh == null) ? ro.Geometry as Mesh : mesh;
+                     break;
+                  }
+               default:
+                  {
+                     Console.Out.WriteLine($"Unable to send geometry type: ${ro.Geometry.ObjectType}");
+                     break;
+                  }
                }
-            case ObjectType.Curve:
-               {
-
-                  break;
-               }
-            case ObjectType.Brep:
-               {
-                  meshes = new List<Mesh>(Mesh.CreateFromBrep(ro.Geometry as Brep));
-                  goto case ObjectType.Mesh;
-               }
-            case ObjectType.Extrusion:
-               {
-                  meshes.Add((ro.Geometry as Extrusion).GetMesh(MeshType.Default));
-                  goto case ObjectType.Mesh;
-               }
-            case ObjectType.Mesh:
-               {
-                  meshes.Add((ro.Geometry as Mesh));
-                  break;
-               }
-            default:
-               {
-                  Console.Out.WriteLine($"Unable to send geometry type: ${ro.Geometry.ObjectType}");
-                  break;
-               }
-            }
 
          });
       }
