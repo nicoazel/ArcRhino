@@ -4,6 +4,7 @@ using ArcGIS.Core.Data;
 using ArcGIS.Desktop.Mapping;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
 using Rhino;
+using System;
 
 namespace ArcRhino_Module
 {
@@ -25,11 +26,13 @@ namespace ArcRhino_Module
             var t = QueuedTask.Run(() =>
             {
                var selectionfromMap = layer.GetSelection();
-               var count = selectionfromMap.GetCount();
+                  var count = selectionfromMap.GetCount();
                // MessageBox.Show($"Got layer {firstLayer.Name} with {count} selected features");
+                  var filter = new QueryFilter { ObjectIDs = selectionfromMap.GetObjectIDs() };
                if (count > 0)
                {
-                  var filter = new QueryFilter { ObjectIDs = selectionfromMap.GetObjectIDs() };
+                  
+
                   using (RowCursor rowCursor = layer.Search(filter))
                   {
                      while (rowCursor.MoveNext())
@@ -66,6 +69,22 @@ namespace ArcRhino_Module
                   }
                }
             });
+         }
+      }
+
+      private static System.Drawing.Color getColor(FeatureLayer layer)
+      {
+         try
+         {
+            var r = layer.GetRenderer();
+            var n = Newtonsoft.Json.Linq.JObject.Parse(r.ToJson());
+            var x = (Newtonsoft.Json.Linq.JArray)n["symbol"]["symbol"]["symbolLayers"][0]["color"]["values"];
+            var c = x.Select(i => (int)i).ToList();
+            return System.Drawing.Color.FromArgb(c[0], c[1], c[2], 1);
+         }
+         catch
+         {
+            return System.Drawing.Color.Black;
          }
       }
 
@@ -127,8 +146,10 @@ namespace ArcRhino_Module
       {
          if (!rhinoDoc.Layers.Any(l => l.Name == layer.Name))
          {
+            var color = getColor(layer);
+
             // TODO: set layer color based on some logic
-            rhinoDoc.Layers.Add(layer.Name, System.Drawing.Color.FromArgb(0, 0, 0, 0));
+            rhinoDoc.Layers.Add(layer.Name, color);
          }
          var layerIndex = rhinoDoc.Layers.FindName(layer.Name).Index;
          var attrs = new Rhino.DocObjects.ObjectAttributes() { LayerIndex = layerIndex };
