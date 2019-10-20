@@ -21,22 +21,25 @@
       <groups>
         <!-- comment this out if you have no controls on the Addin tab to avoid
               an empty group-->
-        <group id="ArcRhino_Module_Group1" caption="Group 1" appearsOnAddInTab="true">
+        <group id="ArcRhino_Module_Group1" caption="ArcRhino" keytip="ArcRhino" appearsOnAddInTab="true">
           <!-- host controls within groups -->
           <button refID="ArcRhino_Module_Dockpane1_ShowButton" size="large" />
         </group>
       </groups>
       <controls>
         <!-- add your controls here -->
-        <button id="ArcRhino_Module_Dockpane1_ShowButton" caption="Show Dockpane 1" className="Dockpane1_ShowButton" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
-          <tooltip heading="Show Dockpane">Show Dockpane<disabledText /></tooltip>
+        <button id="ArcRhino_Module_Dockpane1_ShowButton" caption="Launch ArcRhino" keytip="Launch ArcRhino" className="Dockpane1_ShowButton" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/rhino16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/rhino32.png">
+          <tooltip heading="An AECTech Hackathon Project">
+            Team GIS: Amit, Eesha, Nico, Ryan, Sabrina<disabledText /></tooltip>
         </button>
+        <!-- 
         <button id="ArcRhino_Module_Dockpane1_MenuButton" caption="Burger Menu Button" className="Dockpane1_MenuButton" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
           <tooltip heading="Burger Menu Button">ToolTip<disabledText /></tooltip>
         </button>
+        -->
       </controls>
       <dockPanes>
-        <dockPane id="ArcRhino_Module_Dockpane1" caption="Dockpane 1" className="Dockpane1ViewModel" dock="group" dockWith="esri_core_contentsDockPane">
+        <dockPane id="ArcRhino_Module_Dockpane1" caption="ArcRhino" image="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png" className="Dockpane1ViewModel" dock="group" dockWith="esri_core_contentsDockPane">
           <content className="Dockpane1View" />
         </dockPane>
       </dockPanes>

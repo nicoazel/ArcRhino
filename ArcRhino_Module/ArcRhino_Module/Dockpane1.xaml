@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"    
              xmlns:ui="clr-namespace:ArcRhino_Module"
              xmlns:extensions="clr-namespace:ArcGIS.Desktop.Extensions;assembly=ArcGIS.Desktop.Extensions"
-             xmlns:controls="clr-namespace:ArcGIS.Desktop.Framework.Controls;assembly=ArcGIS.Desktop.Framework"                       
+             xmlns:controls="clr-namespace:ArcGIS.Desktop.Framework.Controls;assembly=ArcGIS.Desktop.Framework"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
+                          d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{Binding Path=ui.Dockpane1ViewModel}" Loaded="UserControl_Loaded">
   <UserControl.Resources>
     <ResourceDictionary>
@@ -23,9 +23,11 @@
     </Grid.RowDefinitions>
 
     <DockPanel Grid.Row="0" LastChildFill="true" KeyboardNavigation.TabNavigation="Local" Height="30">
+      <!--
       <controls:BurgerButton DockPanel.Dock="Right"
                 ToolTip="{Binding BurgerButtonTooltip}"
                 PopupMenu="{Binding BurgerButtonMenu}"/>
+      -->
       <TextBlock Grid.Column="1" Text="{Binding Heading}" Style="{DynamicResource Esri_TextBlockDockPaneHeader}">
         <TextBlock.ToolTip>
           <WrapPanel Orientation="Vertical" MaxWidth="300">
@@ -35,11 +37,17 @@
       </TextBlock>
 
       <Menu>
-        <MenuItem Header="File">
+        <MenuItem>
+          <MenuItem.Header>
+            <StackPanel Orientation="Horizontal">
+              <Image Source="Images/rhino48.png" />
+              <Label Content="ArcRhino" Margin="6,0,0,0"></Label>
+            </StackPanel>
+          </MenuItem.Header>
           <MenuItem Header="Set Rhino origin lat lon" Click="clickSetLatLon"/>
           <MenuItem Header="Open Rhino file" Click="clickOpenRhinoFile"/>
           <MenuItem Header="Import selected ArcGIS features" Click="bImport_Click"/>
-          <MenuItem Header="Push Rhino to ArcGIS" Click="bExport_Click"/>
+          <MenuItem Header="Export selected Rhino geometry" Click="bExport_Click"/>
         </MenuItem>
       </Menu>
     </DockPanel>

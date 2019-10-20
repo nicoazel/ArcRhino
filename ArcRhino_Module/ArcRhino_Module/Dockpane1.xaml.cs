@@ -35,6 +35,7 @@ namespace ArcRhino_Module
       private void clickOpenRhinoFile(object sender, RoutedEventArgs e)
       {
          var ofd = new OpenFileDialog() { Filter = "3DM | *.3dm" };
+         ofd.ShowDialog();
       }
 
       private void clickSetLatLon(object sender, RoutedEventArgs e)

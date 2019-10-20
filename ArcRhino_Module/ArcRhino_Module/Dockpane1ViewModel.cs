@@ -43,7 +43,7 @@ namespace ArcRhino_Module
       static Dockpane1ViewModel()
       {
          RhinoInside.Resolver.Initialize();
-         MessageBox.Show("The Rhino has landed!", "ArcRhino");
+         // MessageBox.Show("The Rhino has landed!", "ArcRhino");
       }
 
       protected override void NotifyPropertyChanged([CallerMemberName] string name = "")
@@ -55,15 +55,15 @@ namespace ArcRhino_Module
       /// <summary>
       /// Text shown near the top of the DockPane.
       /// </summary>
-      private string _heading = "My DockPane";
-      public string Heading
-      {
-         get { return _heading; }
-         set
-         {
-            SetProperty(ref _heading, value, () => Heading);
-         }
-      }
+      // private string _heading = "My DockPane";
+      // public string Heading
+      // {
+      //    get { return _heading; }
+      //    set
+      //    {
+      //       SetProperty(ref _heading, value, () => Heading);
+      //    }
+      // }
 
       #region Burger Button
 
