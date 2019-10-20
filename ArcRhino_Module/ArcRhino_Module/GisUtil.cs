@@ -72,6 +72,11 @@ namespace ArcRhino_Module
          }
       }
 
+      /// <summary>
+      /// Try to get the color of a layer (assuming a single stroke color is applied) or return black by default
+      /// </summary>
+      /// <param name="layer"></param>
+      /// <returns></returns>
       private static System.Drawing.Color getColor(FeatureLayer layer)
       {
          try
