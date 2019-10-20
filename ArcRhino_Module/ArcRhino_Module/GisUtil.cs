@@ -156,32 +156,37 @@ namespace ArcRhino_Module
       {
          return new Rhino.Geometry.Point3d(p.X - 1357671, p.Y - 418736, p.Z);
       }
-<<<<<<< Updated upstream
-   }
-}
-=======
-   
-    
+
+
+
         private static void pushLayerToMap(RhinoDoc rhinoDoc)
         {
             if (rhinoDoc != null)
             {
-                Rhino.DocObjects.ObjRef []obref;
+                Rhino.DocObjects.ObjRef[] obref;
                 Rhino.Commands.Result rc = Rhino.Input.RhinoGet.GetMultipleObjects("Select object", true, Rhino.DocObjects.ObjectType.AnyObject, out obref);
-                
-                foreach (var obj in obref){
+
+                foreach (var obj in obref)
+                {
                     Rhino.DocObjects.RhinoObject rhobj = obj.Object();
                     int layerIndex = rhobj.Attributes.LayerIndex;
                     string layerName = rhinoDoc.Layers[layerIndex].Name;
-                    load();
 
-                    
-                
+                    var thisLayer = ArcGIS.Desktop.Mapping.MapView.Active.Map.FindLayers(layerName).FirstOrDefault() as BasicFeatureLayer;
+                    var projection = thisLayer.GetSpatialReference();
 
- 
-            }
-        }// end push layer to map
-        async void load()
+
+                    load(thisLayer, rhobj);
+                    //mxd = arcpy.mapping.MapDocument(r"C:\Project\Project.mxd")
+                    //df = arcpy.mapping.ListDataFrames(mxd, "Traffic Analysis")[0]
+                    //print arcpy.mapping.ListLayers(mxd, "", df)[0].name
+
+
+
+
+                }
+            }// end push layer to map
+            async void load(BasicFeatureLayer mapLayer, Rhino.DocObjects.RhinoObject obj)
             {
                 await QueuedTask.Run(() =>
                 {
@@ -190,57 +195,37 @@ namespace ArcRhino_Module
                         Name = "Generate mesh"
                     };
 
-                    var mercatorSR = SpatialReferenceBuilder.CreateSpatialReference(3857);
+
+                    var projection = mapLayer.GetSpatialReference();
+
+                    Rhino.Geometry.Polyline thisPolyline = obj as Rhino.Geometry.Polyline;
+                    Rhino.Geometry.NurbsCurve thisNurbsCurve = thisPolyline.ToNurbsCurve();
+                    Rhino.Geometry.Collections.NurbsCurvePointList theseControlPoints = thisNurbsCurve.Points;
+
+
                     var vertices = new List<Coordinate2D>();
-                    vertices.Add(new Coordinate2D(-100, -30));
-                    vertices.Add(new Coordinate2D(-100, 80));
-                    vertices.Add(new Coordinate2D(70, 80));
-                    vertices.Add(new Coordinate2D(70, -30));
-                    var polygon = PolygonBuilder.CreatePolygon(vertices, mercatorSR);
+
+                    foreach (Rhino.Geometry.ControlPoint thisPoint in theseControlPoints)
+                    {
+                        
+                        vertices.Add(new Coordinate2D(thisPoint.Location.X, thisPoint.Location.Y));
+                    }
+
+                    var polygon = PolygonBuilder.CreatePolygon(vertices, projection);
 
                     //var layer = MapView.Active.Map.GetLayersAsFlattenedList().FirstOrDefault();
 
-                    MapView.Active.Map.Layers.IndexOf()
-
-                    createOperation.Create(layer, polygon);
+                    createOperation.Create(mapLayer, polygon);
 
                     createOperation.Execute();
 
-                    MessageBox.Show("Done!");
+                    //MessageBox.Show("Done!");
                 });
             }
 
 
 
-    }
-}
-
-
-
-/*
-var selectionfromMap = firstLayer.GetSelection();
-
-ArcGIS.Core.Data.QueryFilter filter = new ArcGIS.Core.Data.QueryFilter
-{
-   ObjectIDs = selectionfromMap.GetObjectIDs();
-        };
-
-        // get the row
-        using (ArcGIS.Core.Data.RowCursor rowCursor = featureClass.Search(filter, false))
-        {
-          while (rowCursor.MoveNext())
-          {
-            long oid = rowCursor.Current.GetObjectID();
-
-// get the shape from the row
-ArcGIS.Core.Data.Feature feature = rowCursor.Current as ArcGIS.Core.Data.Feature;
-Polygon polygon = feature.GetShape() as Polygon;
-
-// get the attribute from the row (assume it's a double field)
-double value = (double)rowCursor.Current.GetOriginalValue(fldIndex);
-
-            // do something here
-          }
         }
-        */
->>>>>>> Stashed changes
+    }
+
+}
