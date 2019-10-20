@@ -36,20 +36,21 @@ namespace ArcRhino_Module
          {
             if (rhinoDoc != null)
             {
-               Rhino.DocObjects.ObjRef[] obref;
-               Rhino.Commands.Result rc = Rhino.Input.RhinoGet.GetMultipleObjects("Select object", true, Rhino.DocObjects.ObjectType.AnyObject, out obref);
+               //Rhino.DocObjects.ObjRef[] obref;
+               //Rhino.Commands.Result rc = Rhino.Input.RhinoGet.GetMultipleObjects("Select object", true, Rhino.DocObjects.ObjectType.AnyObject, out obref);
 
-               foreach (var obj in obref)
-               {
+               //foreach (var obj in obref)
+               foreach (var rhobj in rhinoDoc.Objects)
+                  {
 
-                  Rhino.DocObjects.RhinoObject rhobj = obj.Object();
+                  //Rhino.DocObjects.RhinoObject rhobj = obj.Object();
                   int layerIndex = rhobj.Attributes.LayerIndex;
                   string layerName = rhinoDoc.Layers[layerIndex].Name;
                   MessageBox.Show($"Got layer {layerName} with selected features");
                   var thisLayer = MapView.Active.Map.FindLayers(layerName).FirstOrDefault() as BasicFeatureLayer;
-                  var projection = thisLayer.GetSpatialReference();
+                  thisLayer = (thisLayer == null) ? MapView.Active.Map.GetLayersAsFlattenedList().FirstOrDefault() as BasicFeatureLayer : thisLayer;
 
-                  RhinoUtil.ThrowItOverTheFence(thisLayer, obj.Object());
+                  RhinoUtil.ThrowItOverTheFence(thisLayer, rhobj);
 
                }//end for each
             }// end push layer to map

@@ -44,6 +44,7 @@ namespace ArcRhino_Module
                   Point pt = ro.Geometry as Point;
                   MapPoint mp = ptToGis(pt.Location);
                   createOperation.Create(mapLayer, mp);
+                  createOperation.ExecuteAsync();
                   break;
                }
             case ObjectType.Surface:
@@ -65,14 +66,13 @@ namespace ArcRhino_Module
                   
                   var polygon = new PolygonBuilder(points).ToGeometry();
                   createOperation.Create(mapLayer, polygon);
-
                   createOperation.ExecuteAsync();
                   break;
                }
             case ObjectType.Curve:
                {
 
-                  if (ro.Geometry is Rhino.Geometry.PolylineCurve polyline)
+                  if (ro.Geometry is PolylineCurve polyline)
                   {
                      var ptList = getPointsFromPolylineCurve(polyline);
                      var gisPts = ptList.Select(p => ptToGis(p)).ToList();
@@ -84,7 +84,6 @@ namespace ArcRhino_Module
                }
             case ObjectType.Brep:
                {
-                  if ((ro.Geometry as Brep).IsSurface) goto case ObjectType.Surface;
                   mesh = Mesh.CreateFromBrep(ro.Geometry as Brep, MeshingParameters.Default)[0];
                   goto case ObjectType.Mesh;
                }
