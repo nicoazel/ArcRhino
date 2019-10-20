@@ -59,14 +59,12 @@ namespace ArcRhino_Module
                }
             case ObjectType.Curve:
                {
-                  if (ro.Geometry is PolylineCurve pl)
-                  {
-                     var ptList = getPointsFromPolylineCurve(pl);
-                     var gisPts = ptList.Select(p => ptToGis(p)).ToList();
-                     var polyline = PolylineBuilder.CreatePolyline(gisPts, projection);
-                     createOperation.Create(mapLayer, polyline);
-                     createOperation.ExecuteAsync();
-                  }
+                  Curve c = ro.Geometry as Curve;
+                  var ptList = getPointsFromCurves(new List<Curve>(){ c });
+                  var gisPts = ptList.Select(p => ptToGis(p)).ToList();
+                  var polyline = PolylineBuilder.CreatePolyline(gisPts, projection);
+                  createOperation.Create(mapLayer, polyline);
+                  createOperation.ExecuteAsync();
                   break;
                }
             case ObjectType.Brep:
@@ -79,12 +77,14 @@ namespace ArcRhino_Module
                   }
                   else
                   {
-                     var points = new List<MapPoint>();
-                     foreach (BrepVertex vt in brep.Vertices)
+                     var crvs = new List<Curve>();
+                     foreach (BrepEdge ed in brep.Edges)
                      {
-                        points.Add(ptToGis(vt.Location));
+                        crvs.Add(ed.EdgeCurve);
                      }
-                     var polygon = new PolygonBuilder(points).ToGeometry();
+                     var pts = getPointsFromCurves(crvs);
+                     var gisPts = pts.Select(p => ptToGis(p)).ToList();
+                     var polygon = new PolygonBuilder(gisPts).ToGeometry();
                      createOperation.Create(mapLayer, polygon);
                      createOperation.ExecuteAsync();
                      break;
@@ -125,14 +125,24 @@ namespace ArcRhino_Module
 
 
 
-      private static List<Rhino.Geometry.Point3d> getPointsFromPolylineCurve(Rhino.Geometry.PolylineCurve crv)
+      private static List<Point3d> getPointsFromCurves(IEnumerable<Curve> crvs)
       {
-         var ptList = new List<Rhino.Geometry.Point3d>();
-         var ptCount = crv.PointCount;
-         for (int i = 0; i < ptCount; i++)
+         var ptList = new List<Point3d>();
+         foreach(Curve c in crvs)
          {
-            var pt = crv.Point(i);
-            ptList.Add(pt);
+            PolylineCurve pl = null;
+            if (c.HasNurbsForm() > 0)
+            {
+               pl = c.ToNurbsCurve().ToPolyline(1, Math.PI / 20, 1, double.MaxValue);
+            }
+            else
+            {
+               pl = c.ToPolyline(1, Math.PI / 20, 1, double.MaxValue);
+            }
+            for (int i = 0; i < pl.PointCount; i++)
+            {
+               ptList.Add(pl.Point(i));
+            }
          }
          return ptList;
       }
