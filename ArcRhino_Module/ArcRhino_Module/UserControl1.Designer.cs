@@ -10,7 +10,7 @@ namespace ArcRhino_Module
    {
       internal static RhinoCore rhinoCore;
       static readonly Guid GrasshopperGuid = new Guid(0xB45A29B1, 0x4343, 0x4035, 0x98, 0x9E, 0x04, 0x4E, 0x85, 0x80, 0xD9, 0xCF);
-      static GH_Document definition;
+      public static GH_Document definition;
       /// <summary> 
       /// Required designer variable.
       /// </summary>
@@ -82,7 +82,7 @@ namespace ArcRhino_Module
          base.OnHandleDestroyed(e);
       }
 
-      public static void LoadGH()
+      public void LoadGH()
       {
          if (!PlugIn.LoadPlugIn(GrasshopperGuid))
             return;
@@ -98,16 +98,18 @@ namespace ArcRhino_Module
             Grasshopper.Instances.DocumentServer.DocumentAdded += DocumentServer_DocumentAdded;
       }
 
-      private static void DocumentServer_DocumentAdded(GH_DocumentServer sender, GH_Document doc)
+      private void DocumentServer_DocumentAdded(GH_DocumentServer sender, GH_Document doc)
       {
          doc.SolutionEnd += Definition_SolutionEnd;
          definition = doc;
       }
 
-      private static void Definition_SolutionEnd(object sender, GH_SolutionEventArgs e)
+      private void Definition_SolutionEnd(object sender, GH_SolutionEventArgs e)
       {
-         MessageBox.Show("SOLUTION ENDED");
-         // TODO: Add code to harvest display meshes when the Grasshopper Definition solution completes solving.
+         if (Tag is Dockpane1View dock && dock.autoupdate.IsChecked == true) {
+             GhUtil.showDocumentPreview();
+             // TODO: Add code to harvest display meshes when the Grasshopper Definition solution completes solving.
+         }
       }
    }
 }

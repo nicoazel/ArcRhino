@@ -125,7 +125,7 @@ namespace ArcRhino_Module
 
 
 
-      private static List<Point3d> getPointsFromCurves(IEnumerable<Curve> crvs)
+      internal static List<Point3d> getPointsFromCurves(IEnumerable<Curve> crvs)
       {
          var ptList = new List<Point3d>();
          foreach(Curve c in crvs)
@@ -147,7 +147,7 @@ namespace ArcRhino_Module
          return ptList;
       }
 
-      private static MapPoint ptToGis(Rhino.Geometry.Point3d pt)
+      internal static MapPoint ptToGis(Rhino.Geometry.Point3d pt)
       {
          return MapPointBuilder.CreateMapPoint(pt.X + 1357671, pt.Y + 418736);
       }

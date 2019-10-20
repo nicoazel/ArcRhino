@@ -42,12 +42,14 @@
             <StackPanel Orientation="Horizontal">
               <Image Source="Images/ArcRhino_48.png" />
               <Label Content="ArcRhino" Margin="6,0,0,0"></Label>
+              <CheckBox x:Name="autoupdate" Content="Autoupdate GH Preview" VerticalAlignment="Center" Margin="20,0,0,0"/>
             </StackPanel>
           </MenuItem.Header>
           <MenuItem Header="Set Rhino origin lat lon" Click="clickSetLatLon"/>
           <MenuItem Header="Open Rhino file" Click="clickOpenRhinoFile"/>
           <MenuItem Header="Import selected ArcGIS features" Click="bImport_Click"/>
           <MenuItem Header="Export selected Rhino geometry" Click="bExport_Click"/>
+          <MenuItem Header="Export previewed Grasshopper geometry" Click="bExportGH_Click"/>
         </MenuItem>
       </Menu>
     </DockPanel>

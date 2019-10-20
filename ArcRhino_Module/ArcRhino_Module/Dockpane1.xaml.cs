@@ -23,6 +23,7 @@ namespace ArcRhino_Module
          WindowsFormsHost host = new WindowsFormsHost();
          Grid.SetRow(host, 1);
          userControl = new UserControl1();
+         userControl.Tag = this;
          host.Child = userControl;
          grid.Children.Add(host);
 
@@ -68,5 +69,9 @@ namespace ArcRhino_Module
 
       }
 
+      private void bExportGH_Click(object sender, RoutedEventArgs e)
+      {
+         GhUtil.showDocumentPreview();
+      }
    }
 }
