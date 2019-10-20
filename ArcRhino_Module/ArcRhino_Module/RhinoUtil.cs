@@ -149,7 +149,7 @@ namespace ArcRhino_Module
 
       private static MapPoint ptToGis(Rhino.Geometry.Point3d pt)
       {
-         return MapPointBuilder.CreateMapPoint(pt.X, pt.Y);
+         return MapPointBuilder.CreateMapPoint(pt.X + 1357671, pt.Y + 418736);
       }
       
 
