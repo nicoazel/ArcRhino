@@ -16,6 +16,9 @@ using ArcGIS.Desktop.Framework.Contracts;
 using ArcGIS.Desktop.Framework.Dialogs;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
 using ArcGIS.Desktop.Mapping;
+
+using Rhino;
+using Rhino.DocObjects;
 using Rhino.Runtime.InProcess;
 
 namespace ArcRhino_Module
@@ -103,50 +106,54 @@ namespace ArcRhino_Module
    {
       protected override void OnClick()
       {
-         string objPath = "C:\\DATA\\aectech2019\\hack\\models\\cube.obj";
-         string objData = System.IO.File.ReadAllText(objPath);
+         foreach(RhinoObject ro in RhinoDoc.ActiveDoc.Objects)
+         {
+            ThrowItOverTheFence(ro);
+         }
 
-         load();
-
+         MessageBox.Show("Done!");
       }
 
 
 
-      async void load()
+
+
+      async void ThrowItOverTheFence(RhinoObject ro)
       {
 
          await QueuedTask.Run(() =>
          {
-            var createOperation = new EditOperation()
+
+            switch(ro.Geometry.ObjectType)
             {
-               Name = "Generate mesh"
-            };
+               case ObjectType.Point:
+                  {
 
-            // meant to work only on layer which has 3857 projection system
-            // with feature class support for polygons
+                     break;
+                  }
+               case ObjectType.Surface:
+                  {
 
-            // Create a spatial reference using the WKID (well-known ID) 
-            // for the Web Mercator coordinate system.
-            var mercatorSR = SpatialReferenceBuilder.CreateSpatialReference(3857);
+                     break;
+                  }
+               case ObjectType.Curve:
+                  {
 
-            // Use the builder to create points that will become vertices.
-            var corner1Point = MapPointBuilder.CreateMapPoint(-1000000, -300000, mercatorSR);
-            var corner2Point = MapPointBuilder.CreateMapPoint(-1000000, 800000, mercatorSR);
-            var corner3Point = MapPointBuilder.CreateMapPoint(700000, 800000, mercatorSR);
-            var corner4Point = MapPointBuilder.CreateMapPoint(700000, -300000, mercatorSR);
+                     break;
+                  }
+               case ObjectType.Brep:
+               case ObjectType.Extrusion:
+               case ObjectType.Mesh:
+                  {
 
-            // Create a list of all map points describing the polygon vertices.
-            var points = new List<MapPoint>() { corner1Point, corner2Point, corner3Point, corner4Point };
-
-            // use the builder to create the polygon container
-            var polygon = new PolygonBuilder(points).ToGeometry();
-
-            var layer = MapView.Active.Map.GetLayersAsFlattenedList().FirstOrDefault();
-            createOperation.Create(layer, polygon);
-
-            createOperation.Execute();
-
-            MessageBox.Show("Done!");
+                     break;
+                  }
+               default:
+                  {
+                     Console.Out.WriteLine($"Unable to send geometry type: ${ro.Geometry.ObjectType}");
+                     break;
+                  }
+            }
 
          });
       }
