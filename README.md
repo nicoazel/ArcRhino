@@ -2,7 +2,7 @@
 
 AECTech Hackothon Rhino.Inside project for ESRI ArcGIS Pro
 
-[![Watch the video](Presentation Materials\Video frame.png)](https://vimeo.com/367573952)
+[![Watch the video](https://github.com/nicoazel/ArcRhino/blob/master/Presentation%20Materials/Video%20frame.png)](https://vimeo.com/367573952)
 
 <iframe src="https://player.vimeo.com/video/367573952?color=ffffff&title=0&byline=0&portrait=0" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 <p><a href="https://vimeo.com/367573952">ArcRhino</a> from <a href="https://vimeo.com/ktrg">KTRG</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
