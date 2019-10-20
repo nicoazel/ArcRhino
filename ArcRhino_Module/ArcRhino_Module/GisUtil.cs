@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using ArcGIS.Core.Geometry;
 using ArcGIS.Core.Data;
 using ArcGIS.Desktop.Mapping;
-using System.Windows.Forms;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
 using Rhino;
 
@@ -39,17 +34,25 @@ namespace ArcRhino_Module
                         {
                            convertPolygon(firstLayer, feature, polygon, rhinoDoc);
                         }
-                        if (feature.GetShape() is Polyline polyline)
+                        else if (feature.GetShape() is Polyline polyline)
                         {
                            convertPolyline(firstLayer, feature, polyline, rhinoDoc);
                         }
-                        if (feature.GetShape() is MapPoint point)
+                        else if (feature.GetShape() is MapPoint point)
                         {
                            convertPoint(firstLayer, feature, point, rhinoDoc);
                         }
-                        if (feature.GetShape() is Multipoint multiPoint)
+                        else if (feature.GetShape() is Multipoint multiPoint)
                         {
-                           // MessageBox.Show("FOUND A MULTIPOINT");
+                           // TODO: treat multipoint as a group of points
+                        }
+                        else if (feature.GetShape() is Multipatch multiPatch)
+                        {
+                           // TODO: treat multipoint as a group of patches
+                        }
+                        else
+                        {
+                           // TODO: figure out other possible types inherited from ArcGIS.Core.Geometry
                         }
                         // MessageBox.Show("Found feature with attributes:\n" + string.Join("\n", feature.GetFields().Select(f => f.Name).ToList()));
                      }
@@ -61,17 +64,8 @@ namespace ArcRhino_Module
 
       private static void convertPoint(FeatureLayer featureLayer, Feature feature, MapPoint point, RhinoDoc rhinoDoc)
       {
-
          var rhinoPoint = convertToRhinoPoint(point);
-         if (!rhinoDoc.Layers.Any(l => l.Name == featureLayer.Name))
-         {
-            rhinoDoc.Layers.Add(featureLayer.Name, System.Drawing.Color.FromArgb(0, 0, 0, 0));
-         }
-         var layerIndex = rhinoDoc.Layers.FindName(featureLayer.Name).Index;
-         var attrs = new Rhino.DocObjects.ObjectAttributes()
-         {
-            LayerIndex = layerIndex
-         };
+         var attrs = getLayerAttrs(featureLayer, rhinoDoc);
          var guid = rhinoDoc.Objects.AddPoint(rhinoPoint, attrs);
          var obj = rhinoDoc.Objects.FindId(guid);
          bindAttrs(obj, feature);
@@ -79,44 +73,32 @@ namespace ArcRhino_Module
 
       private static void convertPolygon(FeatureLayer featureLayer, Feature feature, Polygon polygon, RhinoDoc rhinoDoc)
       {
-
-         var rhinoPoints = polygon.Points.ToList().Select(p => convertToRhinoPoint(p)).ToList(); ;
-         if (!rhinoDoc.Layers.Any(l => l.Name == featureLayer.Name))
-         {
-            rhinoDoc.Layers.Add(featureLayer.Name, System.Drawing.Color.FromArgb(0, 0, 0, 0));
-         }
-         var layerIndex = rhinoDoc.Layers.FindName(featureLayer.Name).Index;
-         var attrs = new Rhino.DocObjects.ObjectAttributes()
-         {
-            LayerIndex = layerIndex
-         };
+         var rhinoPoints = polygon.Points.ToList().Select(p => convertToRhinoPoint(p)).ToList();
+         var attrs = getLayerAttrs(featureLayer, rhinoDoc);
          var guid = rhinoDoc.Objects.AddPolyline(rhinoPoints, attrs);
          var obj = rhinoDoc.Objects.FindId(guid);
          bindAttrs(obj, feature);
-
       }
 
       private static void convertPolyline(FeatureLayer featureLayer, Feature feature, Polyline polyline, RhinoDoc rhinoDoc)
       {
-
          var rhinoPoints = polyline.Points.ToList().Select(p => convertToRhinoPoint(p)).ToList(); ;
-         if (!rhinoDoc.Layers.Any(l => l.Name == featureLayer.Name))
-         {
-            rhinoDoc.Layers.Add(featureLayer.Name, System.Drawing.Color.FromArgb(0, 0, 0, 0));
-         }
-         var layerIndex = rhinoDoc.Layers.FindName(featureLayer.Name).Index;
-         feature.GetFields();
-         var dict = new Rhino.Collections.ArchivableDictionary();
-
-         var attrs = new Rhino.DocObjects.ObjectAttributes()
-         {
-            LayerIndex = layerIndex
-         };
-
+         var attrs = getLayerAttrs(featureLayer, rhinoDoc);
          var guid = rhinoDoc.Objects.AddPolyline(rhinoPoints, attrs);
          var obj = rhinoDoc.Objects.FindId(guid);
          bindAttrs(obj, feature);
+      }
 
+      private static Rhino.DocObjects.ObjectAttributes getLayerAttrs(FeatureLayer featureLayer, RhinoDoc rhinoDoc)
+      {
+         if (!rhinoDoc.Layers.Any(l => l.Name == featureLayer.Name))
+         {
+            // TODO: set layer color based on some logic
+            rhinoDoc.Layers.Add(featureLayer.Name, System.Drawing.Color.FromArgb(0, 0, 0, 0));
+         }
+         var layerIndex = rhinoDoc.Layers.FindName(featureLayer.Name).Index;
+         var attrs = new Rhino.DocObjects.ObjectAttributes() { LayerIndex = layerIndex };
+         return attrs;
       }
 
       private static void bindAttrs(Rhino.DocObjects.RhinoObject obj, Feature feature)
@@ -128,22 +110,14 @@ namespace ArcRhino_Module
             {
                var name = fields[i].Name;
                var val = feature.GetOriginalValue(i);
-               // MessageBox.Show($"Setting {name}: {val.ToString()}");
                obj.Attributes.SetUserString(name, val.ToString());
-
             }
-            catch
-            {
-
-            }
-
+            catch { }
          }
 
       }
 
-      internal static Rhino.Geometry.Point3d convertToRhinoPoint(MapPoint p)
-      {
-         return new Rhino.Geometry.Point3d(p.X - 1357671, p.Y - 418736, p.Z);
-      }
+      internal static Rhino.Geometry.Point3d convertToRhinoPoint(MapPoint p) => 
+         new Rhino.Geometry.Point3d(p.X - 1357671, p.Y - 418736, p.Z);
    }
 }
