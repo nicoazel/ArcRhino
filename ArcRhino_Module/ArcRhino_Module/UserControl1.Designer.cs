@@ -1,4 +1,6 @@
-﻿using Rhino.Runtime.InProcess;
+﻿using Grasshopper.Kernel;
+using Rhino.PlugIns;
+using Rhino.Runtime.InProcess;
 using System;
 using System.Windows.Forms;
 
@@ -7,6 +9,8 @@ namespace ArcRhino_Module
    partial class UserControl1 : UserControl
    {
       internal static RhinoCore rhinoCore;
+      static readonly Guid GrasshopperGuid = new Guid(0xB45A29B1, 0x4343, 0x4035, 0x98, 0x9E, 0x04, 0x4E, 0x85, 0x80, 0xD9, 0xCF);
+      static GH_Document definition;
       /// <summary> 
       /// Required designer variable.
       /// </summary>
@@ -67,6 +71,7 @@ namespace ArcRhino_Module
          {
             // rhinoCore = new Rhino.Runtime.InProcess.RhinoCore(new string[] { "/NOSPLASH" }, WindowStyle.Hidden, Handle);
             rhinoCore = new Rhino.Runtime.InProcess.RhinoCore(new string[] { "/NOSPLASH" }, WindowStyle.Normal);
+            LoadGH();
          }
          base.OnHandleCreated(e);
       }
@@ -75,6 +80,34 @@ namespace ArcRhino_Module
          rhinoCore.Dispose();
          rhinoCore = null;
          base.OnHandleDestroyed(e);
+      }
+
+      public static void LoadGH()
+      {
+         if (!PlugIn.LoadPlugIn(GrasshopperGuid))
+            return;
+
+         var script = new Grasshopper.Plugin.GH_RhinoScriptInterface();
+
+         if (!script.IsEditorLoaded())
+            script.LoadEditor();
+
+         script.ShowEditor();
+
+         if (definition == null)
+            Grasshopper.Instances.DocumentServer.DocumentAdded += DocumentServer_DocumentAdded;
+      }
+
+      private static void DocumentServer_DocumentAdded(GH_DocumentServer sender, GH_Document doc)
+      {
+         doc.SolutionEnd += Definition_SolutionEnd;
+         definition = doc;
+      }
+
+      private static void Definition_SolutionEnd(object sender, GH_SolutionEventArgs e)
+      {
+         MessageBox.Show("SOLUTION ENDED");
+         // TODO: Add code to harvest display meshes when the Grasshopper Definition solution completes solving.
       }
    }
 }
