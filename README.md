@@ -1,9 +1,7 @@
-# ArcRhino
 
 ![ArcRhino](https://raw.githubusercontent.com/nicoazel/ArcRhino/master/Presentation%20Materials/ArcRhino_Name_Icon.PNG)
 
-AECTech Hackothon Rhino.Inside project for ESRI ArcGIS Pro
-
+An AECTech Hackothon Rhino.Inside project for ESRI ArcGIS Pro
 
 [![Watch the video](https://github.com/nicoazel/ArcRhino/blob/master/Presentation%20Materials/Video%20frame.png)](https://vimeo.com/367573952)
 
@@ -17,9 +15,9 @@ Sabrina Naumovski
 
 ## Required Software
 
-- Rhino 7 WIP
-- ArcGIS Pro
-- Visual Studio >= 2017 15.9.17
+- [Rhino 7 WIP](https://www.rhino3d.com/download/rhino-for-windows/wip)
+- [ArcGIS Pro](https://www.esri.com/en-us/arcgis/products/arcgis-pro/resources)
+- [Visual Studio >= 2017 15.9.17](https://visualstudio.microsoft.com/)
 
 ## Resources
 
