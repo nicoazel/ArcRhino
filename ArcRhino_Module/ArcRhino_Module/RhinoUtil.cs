@@ -59,13 +59,12 @@ namespace ArcRhino_Module
                }
             case ObjectType.Curve:
                {
-
-                  if (ro.Geometry is PolylineCurve polyline)
+                  if (ro.Geometry is PolylineCurve pl)
                   {
-                     var ptList = getPointsFromPolylineCurve(polyline);
+                     var ptList = getPointsFromPolylineCurve(pl);
                      var gisPts = ptList.Select(p => ptToGis(p)).ToList();
-                     var polygon = PolygonBuilder.CreatePolygon(gisPts, projection);
-                     createOperation.Create(mapLayer, polygon);
+                     var polyline = PolylineBuilder.CreatePolyline(gisPts, projection);
+                     createOperation.Create(mapLayer, polyline);
                      createOperation.ExecuteAsync();
                   }
                   break;
