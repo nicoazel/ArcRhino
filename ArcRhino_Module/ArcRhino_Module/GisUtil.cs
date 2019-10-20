@@ -4,7 +4,6 @@ using ArcGIS.Core.Data;
 using ArcGIS.Desktop.Mapping;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
 using Rhino;
-using System;
 
 namespace ArcRhino_Module
 {

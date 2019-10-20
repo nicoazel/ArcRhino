@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using ArcGIS.Desktop.Framework;
+﻿using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
 
 namespace ArcRhino_Module
