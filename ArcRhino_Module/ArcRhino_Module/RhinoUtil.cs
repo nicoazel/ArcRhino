@@ -33,10 +33,17 @@ namespace ArcRhino_Module
       {
          Mesh mesh = null;
 
+         var createOperation = new EditOperation();
+
+         var projection = mapLayer.GetSpatialReference();
+
          switch (ro.Geometry.ObjectType)
          {
             case ObjectType.Point:
                {
+                  Point pt = ro.Geometry as Point;
+                  MapPoint mp = ptToGis(pt.Location);
+                  createOperation.Create(mapLayer, mp);
                   break;
                }
             case ObjectType.Surface:
@@ -47,30 +54,17 @@ namespace ArcRhino_Module
                      Console.Out.WriteLine($"Unable to send non-planar surfaces: Guid: ${ro.Id}");
                      break;
                   }
-
-                  var createOperation = new EditOperation();
-
-                  // meant to work only on layer which has 3857 projection system
-                  // with feature class support for polygons
-
-                  // Create a spatial reference using the WKID (well-known ID) 
-                  // for the Web Mercator coordinate system.
-                  var mercatorSR = SpatialReferenceBuilder.CreateSpatialReference(3857);
-
-                  // Create a list of all map points describing the polygon vertices.
+                  
                   var points = new List<MapPoint>();
 
                   foreach (BrepVertex vt in srf.ToBrep().Vertices)
                   {
-                     MapPoint mp = MapPointBuilder.CreateMapPoint(vt.Location.X, vt.Location.Z, mercatorSR);
+                     MapPoint mp = MapPointBuilder.CreateMapPoint(vt.Location.X, vt.Location.Y, projection);
                      points.Add(mp);
                   }
-
-                  // use the builder to create the polygon container
+                  
                   var polygon = new PolygonBuilder(points).ToGeometry();
-
-                  var layer = MapView.Active.Map.GetLayersAsFlattenedList().FirstOrDefault();
-                  createOperation.Create(layer, polygon);
+                  createOperation.Create(mapLayer, polygon);
 
                   createOperation.ExecuteAsync();
                   break;
@@ -78,16 +72,13 @@ namespace ArcRhino_Module
             case ObjectType.Curve:
                {
 
-                  var createOperation = new EditOperation();
-
-                  var projection = mapLayer.GetSpatialReference();
                   if (ro.Geometry is Rhino.Geometry.PolylineCurve polyline)
                   {
                      var ptList = getPointsFromPolylineCurve(polyline);
                      var gisPts = ptList.Select(p => ptToGis(p)).ToList();
                      var polygon = PolygonBuilder.CreatePolygon(gisPts, projection);
                      createOperation.Create(mapLayer, polygon);
-                     createOperation.Execute();
+                     createOperation.ExecuteAsync();
                   }
                   break;
                }
