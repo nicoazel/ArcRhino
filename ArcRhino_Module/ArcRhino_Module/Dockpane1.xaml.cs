@@ -22,8 +22,7 @@ namespace ArcRhino_Module
       {
          WindowsFormsHost host = new WindowsFormsHost();
          Grid.SetRow(host, 1);
-         userControl = new UserControl1();
-         userControl.Tag = this;
+         userControl = new UserControl1() { Tag = this }; // set Tag to access autoupdate check state
          host.Child = userControl;
          grid.Children.Add(host);
 
@@ -66,7 +65,12 @@ namespace ArcRhino_Module
 
       private void clickSetLatLon(object sender, RoutedEventArgs e)
       {
-
+         // TODO: 
+         string todo = "Feature not yet implemented. Coming soon." +
+            "\n1.  Get center X,Y from ArcGIS map" +
+            "\n2.  Cache that to Rhino document properties/user text" +
+            "\n3.  Use that reference to transform to/from ArcGIS and Rhino";
+         MessageBox.Show(todo);
       }
 
       private void bExportGH_Click(object sender, RoutedEventArgs e)
