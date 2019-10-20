@@ -55,19 +55,7 @@ namespace ArcRhino_Module
                      Console.Out.WriteLine($"Unable to send non-planar surfaces: Guid: ${ro.Id}");
                      break;
                   }
-                  
-                  var points = new List<MapPoint>();
-
-                  foreach (BrepVertex vt in srf.ToBrep().Vertices)
-                  {
-                     MapPoint mp = MapPointBuilder.CreateMapPoint(vt.Location.X, vt.Location.Y, projection);
-                     points.Add(mp);
-                  }
-                  
-                  var polygon = new PolygonBuilder(points).ToGeometry();
-                  createOperation.Create(mapLayer, polygon);
-                  createOperation.ExecuteAsync();
-                  break;
+                  goto case ObjectType.Brep;
                }
             case ObjectType.Curve:
                {
@@ -84,8 +72,24 @@ namespace ArcRhino_Module
                }
             case ObjectType.Brep:
                {
-                  mesh = Mesh.CreateFromBrep(ro.Geometry as Brep, MeshingParameters.Default)[0];
-                  goto case ObjectType.Mesh;
+                  Brep brep = ro.Geometry as Brep;
+                  if (brep.IsSolid)
+                  {
+                     mesh = Mesh.CreateFromBrep(brep, MeshingParameters.Default)[0];
+                     goto case ObjectType.Mesh;
+                  }
+                  else
+                  {
+                     var points = new List<MapPoint>();
+                     foreach (BrepVertex vt in brep.Vertices)
+                     {
+                        points.Add(ptToGis(vt.Location));
+                     }
+                     var polygon = new PolygonBuilder(points).ToGeometry();
+                     createOperation.Create(mapLayer, polygon);
+                     createOperation.ExecuteAsync();
+                     break;
+                  }
                }
             case ObjectType.Extrusion:
                {
