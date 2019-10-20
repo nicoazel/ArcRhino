@@ -9,7 +9,7 @@ An AECTech Hackathon Rhino.Inside project for ESRI ArcGIS Pro
 
 Amit Nambiar\
 Eesha Khanna\
-Nicolas Azel\
+Nico Azel\
 Ryan Welch\
 Sabrina Naumovski
 
