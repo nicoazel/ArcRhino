@@ -1,34 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using ArcGIS.Core.CIM;
-using ArcGIS.Core.Data;
 using ArcGIS.Core.Geometry;
-using ArcGIS.Desktop.Catalog;
-using ArcGIS.Desktop.Core;
 using ArcGIS.Desktop.Editing;
-using ArcGIS.Desktop.Extensions;
-using ArcGIS.Desktop.Framework;
-using ArcGIS.Desktop.Framework.Contracts;
-using ArcGIS.Desktop.Framework.Dialogs;
-using ArcGIS.Desktop.Framework.Threading.Tasks;
 using ArcGIS.Desktop.Mapping;
-
-using Rhino;
 using Rhino.Geometry;
 using Rhino.DocObjects;
-using Rhino.Runtime.InProcess;
 
 namespace ArcRhino_Module
 {
    internal static class RhinoUtil
    {
-
-
-
+      /// <summary>
+      /// Write rhino object to ArcGIS feature layer
+      /// </summary>
+      /// <param name="mapLayer"></param>
+      /// <param name="ro"></param>
       public static async void ThrowItOverTheFence(BasicFeatureLayer mapLayer, RhinoObject ro)
       {
          Mesh mesh = null;
@@ -106,25 +93,13 @@ namespace ArcRhino_Module
                   break;
                }
          }
-
       }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      
+      /// <summary>
+      /// Get the points on a list of curves
+      /// </summary>
+      /// <param name="crvs"></param>
+      /// <returns></returns>
       internal static List<Point3d> getPointsFromCurves(IEnumerable<Curve> crvs)
       {
          var ptList = new List<Point3d>();
@@ -147,16 +122,15 @@ namespace ArcRhino_Module
          return ptList;
       }
 
-      internal static MapPoint ptToGis(Rhino.Geometry.Point3d pt)
+      /// <summary>
+      /// Convert Rhino Point3d to ArcGIS MapPoint (using tranformation)
+      /// </summary>
+      /// <param name="pt"></param>
+      /// <returns></returns>
+      internal static MapPoint ptToGis(Point3d pt)
       {
+         // TODO: get transformation from cached doc properties or prompt user to set lat-lon first
          return MapPointBuilder.CreateMapPoint(pt.X + 1357671, pt.Y + 418736);
       }
-      
-
-
-
-
-
-
    }
 }
