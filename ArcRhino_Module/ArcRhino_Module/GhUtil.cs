@@ -21,6 +21,9 @@ namespace ArcRhino_Module
       {
          try
          {
+            // TODO: determine whether to purge existing GH_Preview geometry
+            // on feature layers or append to that.
+
             var document = Grasshopper.Instances.DocumentServer.FirstOrDefault();
             if (document == null) return;
             var t = QueuedTask.Run(() =>
