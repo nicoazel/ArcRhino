@@ -1,0 +1,25 @@
+﻿<Window x:Class="ArcRhino_Module.Splash"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ArcRhino_Module"
+        mc:Ignorable="d"
+        Title="Splash" Height="260" Width="791" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None">
+  <Grid MouseDown="close">
+    <Image Source="Images/ArcRhino_Name_Icon.PNG" VerticalAlignment="Top"/>
+    <StackPanel VerticalAlignment="Bottom" Orientation="Vertical">
+      <Label Content="An AEC Tech 2019 Hackathon Project"  Margin="5,0" Padding="4,0" FontSize="15"/>
+      <Label Content="Amit Nambiar, Eesha Khanna, Nico Azel, Ryan Welch, Sabrina Naumovski"  Margin="5,0" Padding="4,0,0,10" FontSize="10"/>
+      
+    </StackPanel>
+    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Vertical">
+      <Label Content="View on GitHub" Margin="5,0" Padding="4,0" FontSize="15" HorizontalAlignment="Right"/>
+      <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0" Padding="0,0,4,10" FontSize="10">
+        <Hyperlink x:Name="hyperlink" NavigateUri="https://github.com/nicoazel/ArcRhino" RequestNavigate="clickUrl">
+           https://github.com/nicoazel/ArcRhino
+        </Hyperlink>
+      </TextBlock>
+    </StackPanel>
+  </Grid>
+</Window>

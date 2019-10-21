@@ -16,7 +16,10 @@ namespace ArcRhino_Module
    {
       UserControl1 userControl;
       RhinoDoc rhinoDoc => RhinoDoc.ActiveDoc ?? null;
-      public Dockpane1View() => InitializeComponent();
+      public Dockpane1View()
+      {
+         InitializeComponent();
+      }
 
       private void UserControl_Loaded(object sender, RoutedEventArgs e)
       {
@@ -29,6 +32,7 @@ namespace ArcRhino_Module
       }
 
       private void bImport_Click(object sender, RoutedEventArgs e) => GisUtil.copySelectedObjects(rhinoDoc);
+      private void bExportGH_Click(object sender, RoutedEventArgs e) => GhUtil.showDocumentPreview();
 
       private void bExport_Click(object sender, RoutedEventArgs e)
       {
@@ -73,9 +77,10 @@ namespace ArcRhino_Module
          MessageBox.Show(todo);
       }
 
-      private void bExportGH_Click(object sender, RoutedEventArgs e)
+      private void clickHelp(object sender, RoutedEventArgs e)
       {
-         GhUtil.showDocumentPreview();
+         var splash = new Splash();
+         splash.ShowDialog();
       }
    }
 }

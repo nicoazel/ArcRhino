@@ -143,6 +143,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Splash.xaml.cs">
+      <DependentUpon>Splash.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl1.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -155,6 +158,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Splash.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="DarkImages\GenericButtonPurple16.png" />
@@ -163,6 +170,9 @@
     <AddInContent Include="DarkImages\GenericButtonPurple32.png" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="FontAwesome.UWP">
+      <Version>4.7.0.9</Version>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.2</Version>
     </PackageReference>
@@ -191,6 +201,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\ArcRhino.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ArcRhino_Name_Icon.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!--

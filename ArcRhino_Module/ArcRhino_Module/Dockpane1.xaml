@@ -6,8 +6,9 @@
              xmlns:ui="clr-namespace:ArcRhino_Module"
              xmlns:extensions="clr-namespace:ArcGIS.Desktop.Extensions;assembly=ArcGIS.Desktop.Extensions"
              xmlns:controls="clr-namespace:ArcGIS.Desktop.Framework.Controls;assembly=ArcGIS.Desktop.Framework"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
-                          d:DesignHeight="300" d:DesignWidth="300"
+                          d:DesignHeight="300" d:DesignWidth="320"
              d:DataContext="{Binding Path=ui.Dockpane1ViewModel}" Loaded="UserControl_Loaded">
   <UserControl.Resources>
     <ResourceDictionary>
@@ -23,11 +24,6 @@
     </Grid.RowDefinitions>
 
     <DockPanel Grid.Row="0" LastChildFill="true" KeyboardNavigation.TabNavigation="Local" Height="30">
-      <!--
-      <controls:BurgerButton DockPanel.Dock="Right"
-                ToolTip="{Binding BurgerButtonTooltip}"
-                PopupMenu="{Binding BurgerButtonMenu}"/>
-      -->
       <TextBlock Grid.Column="1" Text="{Binding Heading}" Style="{DynamicResource Esri_TextBlockDockPaneHeader}">
         <TextBlock.ToolTip>
           <WrapPanel Orientation="Vertical" MaxWidth="300">
@@ -36,13 +32,12 @@
         </TextBlock.ToolTip>
       </TextBlock>
 
-      <Menu>
+      <Menu Background="Transparent">
         <MenuItem>
           <MenuItem.Header>
             <StackPanel Orientation="Horizontal">
               <Image Source="Images/ArcRhino_48.png" />
-              <Label Content="ArcRhino" Margin="6,0,0,0"></Label>
-              <CheckBox x:Name="autoupdate" Content="Autoupdate GH Preview" VerticalAlignment="Center" Margin="20,0,0,0"/>
+              <Label Content="ArcRhino" Margin="6,0,0,0" Foreground="Black"></Label>
             </StackPanel>
           </MenuItem.Header>
           <MenuItem Header="Set Rhino origin lat lon" Click="clickSetLatLon"/>
@@ -52,6 +47,10 @@
           <MenuItem Header="Export previewed Grasshopper geometry" Click="bExportGH_Click"/>
         </MenuItem>
       </Menu>
+      <CheckBox x:Name="autoupdate" Content="Autoupdate GH Preview" VerticalAlignment="Center" Margin="20,0,10,0"/>
+      <Button Background="Transparent" Click="clickHelp" Width="26" Margin="5,0" BorderBrush="Transparent" HorizontalAlignment="Right">
+        <fa:ImageAwesome Icon="QuestionCircleOutline" Foreground="Black" VerticalAlignment="Center" Height="12"/>
+      </Button>
     </DockPanel>
   </Grid>
 </UserControl>
