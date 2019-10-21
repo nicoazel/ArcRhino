@@ -30,8 +30,6 @@ namespace ArcRhino_Module
                   var filter = new QueryFilter { ObjectIDs = selectionfromMap.GetObjectIDs() };
                if (count > 0)
                {
-                  
-
                   using (RowCursor rowCursor = layer.Search(filter))
                   {
                      while (rowCursor.MoveNext())

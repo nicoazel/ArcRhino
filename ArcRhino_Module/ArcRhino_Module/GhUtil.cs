@@ -58,7 +58,10 @@ namespace ArcRhino_Module
          }
       }
 
-      internal enum FeatureLayerType
+      /// <summary>
+      /// Feature Layer Type (polygon, polyline, point, ...)
+      /// </summary>
+      private enum FeatureLayerType
       {
          GH_Preview_Polygon,
          GH_Preview_Polyline,
@@ -71,7 +74,7 @@ namespace ArcRhino_Module
       /// </summary>
       /// <param name="type">Feature layer type (point, line, polygon)</param>
       /// <returns>Feature Layer</returns>
-      internal static BasicFeatureLayer getFeatureLayer(FeatureLayerType type)
+      private static BasicFeatureLayer getFeatureLayer(FeatureLayerType type)
       {
          var ghPreviewLayer = MapView.Active.Map.FindLayers(type.ToString("g")).FirstOrDefault();
          if (ghPreviewLayer != null) return ghPreviewLayer as BasicFeatureLayer;
@@ -176,7 +179,6 @@ namespace ArcRhino_Module
 
          }
       }
-
 
       /// <summary>
       /// Place point on feature layer
