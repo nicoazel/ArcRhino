@@ -9,6 +9,9 @@ using Rhino.DocObjects;
 
 namespace ArcRhino_Module
 {
+   /// <summary>
+   /// Static methods for pushing Rhino Object geometry to ArcGIS
+   /// </summary>
    internal static class RhinoUtil
    {
       /// <summary>
@@ -31,7 +34,7 @@ namespace ArcRhino_Module
                   Point pt = ro.Geometry as Point;
                   MapPoint mp = ptToGis(pt.Location);
                   createOperation.Create(mapLayer, mp);
-                  createOperation.ExecuteAsync();
+                  await createOperation.ExecuteAsync();
                   break;
                }
             case ObjectType.Surface:
@@ -51,7 +54,7 @@ namespace ArcRhino_Module
                   var gisPts = ptList.Select(p => ptToGis(p)).ToList();
                   var polyline = PolylineBuilder.CreatePolyline(gisPts, projection);
                   createOperation.Create(mapLayer, polyline);
-                  createOperation.ExecuteAsync();
+                  await createOperation.ExecuteAsync();
                   break;
                }
             case ObjectType.Brep:
@@ -73,7 +76,7 @@ namespace ArcRhino_Module
                      var gisPts = pts.Select(p => ptToGis(p)).ToList();
                      var polygon = new PolygonBuilder(gisPts).ToGeometry();
                      createOperation.Create(mapLayer, polygon);
-                     createOperation.ExecuteAsync();
+                     await createOperation.ExecuteAsync();
                      break;
                   }
                }
@@ -84,7 +87,7 @@ namespace ArcRhino_Module
                }
             case ObjectType.Mesh:
                {
-                  mesh = (mesh == null) ? ro.Geometry as Mesh : mesh;
+                  mesh = mesh ?? ro.Geometry as Mesh;
                   break;
                }
             default:
