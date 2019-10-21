@@ -32,22 +32,12 @@
           <tooltip heading="An AECTech Hackathon Project">
             Team GIS: Amit, Eesha, Nico, Ryan, Sabrina<disabledText /></tooltip>
         </button>
-        <!-- 
-        <button id="ArcRhino_Module_Dockpane1_MenuButton" caption="Burger Menu Button" className="Dockpane1_MenuButton" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
-          <tooltip heading="Burger Menu Button">ToolTip<disabledText /></tooltip>
-        </button>
-        -->
       </controls>
       <dockPanes>
         <dockPane id="ArcRhino_Module_Dockpane1" caption="ArcRhino" image="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png" className="Dockpane1ViewModel" dock="group" dockWith="esri_core_contentsDockPane">
           <content className="Dockpane1View" />
         </dockPane>
       </dockPanes>
-      <menus>
-        <menu id="ArcRhino_Module_Dockpane1_Menu" caption="Options" contextMenu="true">
-          <button refID="ArcRhino_Module_Dockpane1_MenuButton" />
-        </menu>
-      </menus>
     </insertModule>
   </modules>
 </ArcGIS>
