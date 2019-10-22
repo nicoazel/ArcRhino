@@ -71,14 +71,23 @@ namespace ArcRhino_Module
          {
             // rhinoCore = new Rhino.Runtime.InProcess.RhinoCore(new string[] { "/NOSPLASH" }, WindowStyle.Hidden, Handle);
             rhinoCore = new Rhino.Runtime.InProcess.RhinoCore(new string[] { "/NOSPLASH" }, WindowStyle.Normal);
-            LoadGH();
+            // TODO: determine whether to load automatically or on-demand
+            // LoadGH();
          }
          base.OnHandleCreated(e);
       }
       protected override void OnHandleDestroyed(EventArgs e)
       {
-         rhinoCore.Dispose();
-         rhinoCore = null;
+         if (definition != null)
+         {
+            definition.Dispose();
+            definition = null;
+         }
+         if (rhinoCore != null)
+         {
+            rhinoCore.Dispose();
+            rhinoCore = null;
+         }
          base.OnHandleDestroyed(e);
       }
 
