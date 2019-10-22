@@ -6,6 +6,9 @@ using ArcGIS.Desktop.Editing;
 using ArcGIS.Desktop.Mapping;
 using Rhino.Geometry;
 using Rhino.DocObjects;
+using Rhino;
+using ArcGIS.Desktop.Framework.Threading.Tasks;
+using System.Threading.Tasks;
 
 namespace ArcRhino_Module
 {
@@ -19,20 +22,21 @@ namespace ArcRhino_Module
       /// </summary>
       /// <param name="mapLayer"></param>
       /// <param name="ro"></param>
-      public static async void ThrowItOverTheFence(BasicFeatureLayer mapLayer, RhinoObject ro)
+      public static async void ThrowItOverTheFence(BasicFeatureLayer mapLayer, RhinoObject ro, RhinoDoc rhinoDoc)
       {
          Mesh mesh = null;
 
          var createOperation = new EditOperation();
 
          var projection = mapLayer.GetSpatialReference();
+         var origin = getOrigin(rhinoDoc);
 
          switch (ro.Geometry.ObjectType)
          {
             case ObjectType.Point:
                {
                   Point pt = ro.Geometry as Point;
-                  MapPoint mp = ptToGis(pt.Location);
+                  MapPoint mp = ptToGis(pt.Location, origin);
                   createOperation.Create(mapLayer, mp);
                   await createOperation.ExecuteAsync();
                   break;
@@ -51,7 +55,7 @@ namespace ArcRhino_Module
                {
                   Curve c = ro.Geometry as Curve;
                   var ptList = getPointsFromCurves(new List<Curve>(){ c });
-                  var gisPts = ptList.Select(p => ptToGis(p)).ToList();
+                  var gisPts = ptList.Select(p => ptToGis(p, origin)).ToList();
                   var polyline = PolylineBuilder.CreatePolyline(gisPts, projection);
                   createOperation.Create(mapLayer, polyline);
                   await createOperation.ExecuteAsync();
@@ -73,7 +77,7 @@ namespace ArcRhino_Module
                         crvs.Add(ed.EdgeCurve);
                      }
                      var pts = getPointsFromCurves(crvs);
-                     var gisPts = pts.Select(p => ptToGis(p)).ToList();
+                     var gisPts = pts.Select(p => ptToGis(p, origin)).ToList();
                      var polygon = new PolygonBuilder(gisPts).ToGeometry();
                      createOperation.Create(mapLayer, polygon);
                      await createOperation.ExecuteAsync();
@@ -97,7 +101,54 @@ namespace ArcRhino_Module
                }
          }
       }
-      
+
+      internal static Point3d getCenter()
+      {
+         var pt = new Point3d(0, 0, 0);
+         QueuedTask.Run(() =>
+         {
+            var fl = MapView.Active.Map.Layers.OfType<FeatureLayer>().FirstOrDefault();
+            if (fl != null)
+            {
+               var c = MapView.Active.Camera;
+               pt = new Point3d(c.X, c.Y, 0);
+            }
+         }).Wait();
+         return pt;
+      }
+
+
+      internal static Point3d getOrigin(RhinoDoc rhinoDoc)
+      {
+         try
+         {
+            var xyStr = rhinoDoc.Strings.GetValue("ArcRhinoXY");
+            if (xyStr == null || xyStr.Length == 0 || xyStr.Split(',').Length != 3)
+            {
+               var xy = getCenter();
+               // c.Wait();
+               // var xy = c.Result;
+               // TODO: set z-0 if non-zero
+               xyStr = $"{xy.X},{xy.Y},{0}";
+               System.Windows.MessageBox.Show($"NEW VAL {xyStr}");
+               rhinoDoc.Strings.SetString("ArcRhinoXY", xyStr);
+               return xy;
+            }
+            else
+            {
+               System.Windows.MessageBox.Show($"HAS VAL {xyStr}");
+               var vals = xyStr.Split(',').Select(i => Convert.ToDouble(i)).ToList();
+               // TODO: set z-0 if non-zero
+               return new Point3d(vals[0], vals[1], 0);
+            }
+         }
+         catch (Exception ex)
+         {
+            System.Windows.MessageBox.Show(ex.Message + ex.StackTrace);
+            return new Point3d(0, 0, 0);
+         }
+      }
+
       /// <summary>
       /// Get the points on a list of curves
       /// </summary>
@@ -130,10 +181,10 @@ namespace ArcRhino_Module
       /// </summary>
       /// <param name="pt"></param>
       /// <returns></returns>
-      internal static MapPoint ptToGis(Point3d pt)
+      internal static MapPoint ptToGis(Point3d pt, Point3d origin)
       {
          // TODO: get transformation from cached doc properties or prompt user to set lat-lon first
-         return MapPointBuilder.CreateMapPoint(pt.X + 1357671, pt.Y + 418736);
+         return MapPointBuilder.CreateMapPoint(pt.X + origin.X, pt.Y + origin.Y);
       }
    }
 }

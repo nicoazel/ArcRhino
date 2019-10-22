@@ -107,7 +107,7 @@ namespace ArcRhino_Module
       private void Definition_SolutionEnd(object sender, GH_SolutionEventArgs e)
       {
          if (Tag is Dockpane1View dock && dock.autoupdate.IsChecked == true) {
-             GhUtil.showDocumentPreview();
+             GhUtil.showDocumentPreview(dock.rhinoDoc);
              // TODO: Add code to harvest display meshes when the Grasshopper Definition solution completes solving.
          }
       }

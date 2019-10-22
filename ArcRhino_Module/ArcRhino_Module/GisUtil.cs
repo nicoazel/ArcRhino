@@ -19,6 +19,8 @@ namespace ArcRhino_Module
       internal static void copySelectedObjects(RhinoDoc rhinoDoc)
       {
          if (rhinoDoc == null) return;
+         var origin = RhinoUtil.getOrigin(rhinoDoc);
+         // System.Windows.MessageBox.Show($"Origin {origin.ToString()}");
          var layers = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().ToList();
          foreach (var layer in layers)
          {
@@ -39,15 +41,15 @@ namespace ArcRhino_Module
                         Feature feature = rowCursor.Current as Feature;
                         if (feature.GetShape() is Polygon polygon)
                         {
-                           convertPolygon(layer, feature, polygon, rhinoDoc);
+                           convertPolygon(layer, feature, polygon, rhinoDoc, origin);
                         }
                         else if (feature.GetShape() is Polyline polyline)
                         {
-                           convertPolyline(layer, feature, polyline, rhinoDoc);
+                           convertPolyline(layer, feature, polyline, rhinoDoc, origin);
                         }
                         else if (feature.GetShape() is MapPoint point)
                         {
-                           convertPoint(layer, feature, point, rhinoDoc);
+                           convertPoint(layer, feature, point, rhinoDoc, origin);
                         }
                         else if (feature.GetShape() is Multipoint multiPoint)
                         {
@@ -97,9 +99,9 @@ namespace ArcRhino_Module
       /// <param name="feature">Feature</param>
       /// <param name="point">MapPoint</param>
       /// <param name="rhinoDoc">RhinoDoc</param>
-      private static void convertPoint(FeatureLayer layer, Feature feature, MapPoint point, RhinoDoc rhinoDoc)
+      private static void convertPoint(FeatureLayer layer, Feature feature, MapPoint point, RhinoDoc rhinoDoc, Rhino.Geometry.Point3d origin)
       {
-         var rhinoPoint = convertToRhinoPoint(point);
+         var rhinoPoint = convertToRhinoPoint(point, origin);
          var attrs = getLayerAttrs(layer, rhinoDoc);
          var guid = rhinoDoc.Objects.AddPoint(rhinoPoint, attrs);
          var obj = rhinoDoc.Objects.FindId(guid);
@@ -113,9 +115,9 @@ namespace ArcRhino_Module
       /// <param name="feature">Feature</param>
       /// <param name="polygon">Polygon</param>
       /// <param name="rhinoDoc">RhinoDoc</param>
-      private static void convertPolygon(FeatureLayer layer, Feature feature, Polygon polygon, RhinoDoc rhinoDoc)
+      private static void convertPolygon(FeatureLayer layer, Feature feature, Polygon polygon, RhinoDoc rhinoDoc, Rhino.Geometry.Point3d origin)
       {
-         var rhinoPoints = polygon.Points.ToList().Select(p => convertToRhinoPoint(p)).ToList();
+         var rhinoPoints = polygon.Points.ToList().Select(p => convertToRhinoPoint(p, origin)).ToList();
          var attrs = getLayerAttrs(layer, rhinoDoc);
          var guid = rhinoDoc.Objects.AddPolyline(rhinoPoints, attrs);
          var obj = rhinoDoc.Objects.FindId(guid);
@@ -129,9 +131,9 @@ namespace ArcRhino_Module
       /// <param name="feature">Feature</param>
       /// <param name="polygon">Polygon</param>
       /// <param name="rhinoDoc">RhinoDoc</param>
-      private static void convertPolyline(FeatureLayer layer, Feature feature, Polyline polyline, RhinoDoc rhinoDoc)
+      private static void convertPolyline(FeatureLayer layer, Feature feature, Polyline polyline, RhinoDoc rhinoDoc, Rhino.Geometry.Point3d origin)
       {
-         var rhinoPoints = polyline.Points.ToList().Select(p => convertToRhinoPoint(p)).ToList(); ;
+         var rhinoPoints = polyline.Points.ToList().Select(p => convertToRhinoPoint(p, origin)).ToList();
          var attrs = getLayerAttrs(layer, rhinoDoc);
          var guid = rhinoDoc.Objects.AddPolyline(rhinoPoints, attrs);
          var obj = rhinoDoc.Objects.FindId(guid);
@@ -183,7 +185,7 @@ namespace ArcRhino_Module
       /// </summary>
       /// <param name="p"></param>
       /// <returns></returns>
-      internal static Rhino.Geometry.Point3d convertToRhinoPoint(MapPoint p) => 
-         new Rhino.Geometry.Point3d(p.X - 1357671, p.Y - 418736, p.Z);
+      internal static Rhino.Geometry.Point3d convertToRhinoPoint(MapPoint p, Rhino.Geometry.Point3d origin) => 
+         new Rhino.Geometry.Point3d(p.X - origin.X, p.Y - origin.Y, p.Z - origin.Z);
    }
 }

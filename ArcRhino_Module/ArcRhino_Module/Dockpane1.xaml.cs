@@ -15,7 +15,7 @@ namespace ArcRhino_Module
    public partial class Dockpane1View : UserControl
    {
       UserControl1 userControl;
-      RhinoDoc rhinoDoc => RhinoDoc.ActiveDoc ?? null;
+      internal RhinoDoc rhinoDoc => RhinoDoc.ActiveDoc ?? null;
       public Dockpane1View()
       {
          InitializeComponent();
@@ -32,7 +32,7 @@ namespace ArcRhino_Module
       }
 
       private void bImport_Click(object sender, RoutedEventArgs e) => GisUtil.copySelectedObjects(rhinoDoc);
-      private void bExportGH_Click(object sender, RoutedEventArgs e) => GhUtil.showDocumentPreview();
+      private void bExportGH_Click(object sender, RoutedEventArgs e) => GhUtil.showDocumentPreview(rhinoDoc);
 
       private void bExport_Click(object sender, RoutedEventArgs e)
       {
@@ -54,9 +54,8 @@ namespace ArcRhino_Module
                   var thisLayer = MapView.Active.Map.FindLayers(layerName).FirstOrDefault() as BasicFeatureLayer;
                   thisLayer = (thisLayer == null) ? MapView.Active.Map.GetLayersAsFlattenedList().FirstOrDefault() as BasicFeatureLayer : thisLayer;
 
-                  RhinoUtil.ThrowItOverTheFence(thisLayer, rhobj);
-
-               }//end for each
+                  RhinoUtil.ThrowItOverTheFence(thisLayer, rhobj, rhinoDoc);
+               }
             }// end push layer to map
          });
       }
