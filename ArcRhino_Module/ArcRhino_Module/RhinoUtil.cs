@@ -102,6 +102,10 @@ namespace ArcRhino_Module
          }
       }
 
+      /// <summary>
+      /// Get the center of the map view
+      /// </summary>
+      /// <returns></returns>
       internal static Point3d getCenter()
       {
          var pt = new Point3d(0, 0, 0);
@@ -117,7 +121,11 @@ namespace ArcRhino_Module
          return pt;
       }
 
-
+      /// <summary>
+      /// Get the origin of the Rhio doc in Map coordinates (default to center of map view)
+      /// </summary>
+      /// <param name="rhinoDoc"></param>
+      /// <returns></returns>
       internal static Point3d getOrigin(RhinoDoc rhinoDoc)
       {
          try
@@ -126,17 +134,13 @@ namespace ArcRhino_Module
             if (xyStr == null || xyStr.Length == 0 || xyStr.Split(',').Length != 3)
             {
                var xy = getCenter();
-               // c.Wait();
-               // var xy = c.Result;
                // TODO: set z-0 if non-zero
                xyStr = $"{xy.X},{xy.Y},{0}";
-               System.Windows.MessageBox.Show($"NEW VAL {xyStr}");
                rhinoDoc.Strings.SetString("ArcRhinoXY", xyStr);
                return xy;
             }
             else
             {
-               System.Windows.MessageBox.Show($"HAS VAL {xyStr}");
                var vals = xyStr.Split(',').Select(i => Convert.ToDouble(i)).ToList();
                // TODO: set z-0 if non-zero
                return new Point3d(vals[0], vals[1], 0);

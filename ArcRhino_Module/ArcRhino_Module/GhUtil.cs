@@ -24,32 +24,30 @@ namespace ArcRhino_Module
          {
             // TODO: determine whether to purge existing GH_Preview geometry
             // on feature layers or append to that.
-
             var document = Grasshopper.Instances.DocumentServer.FirstOrDefault();
             if (document == null) return;
             if (rhinoDoc == null) return;
             var origin = RhinoUtil.getOrigin(rhinoDoc);
-            var t = QueuedTask.Run(() =>
+            var previewObjects = document.Objects
+               .OfType<IGH_ActiveObject>()
+               .Where(o => !o.Locked && o is IGH_PreviewObject)
+               .Select(o => o as IGH_PreviewObject)
+               .Where(o => o.IsPreviewCapable)
+               .ToList();
+
+            var componentParams = previewObjects
+               .Where(o => o is IGH_Component)
+               .Select(o => o as IGH_Component)
+               .Where(o => !o.Hidden)
+               .SelectMany(o => o.Params.Output)
+               .ToList();
+
+            var otherParams = previewObjects
+               .Where(o => o is IGH_Param)
+               .Select(o => o as IGH_Param)
+               .ToList();
+            QueuedTask.Run(() =>
             {
-               var previewObjects = document.Objects
-                  .OfType<IGH_ActiveObject>()
-                  .Where(o => !o.Locked && o is IGH_PreviewObject)
-                  .Select(o => o as IGH_PreviewObject)
-                  .Where(o => o.IsPreviewCapable)
-                  .ToList();
-
-               var componentParams = previewObjects
-                  .Where(o => o is IGH_Component)
-                  .Select(o => o as IGH_Component)
-                  .Where(o => !o.Hidden)
-                  .SelectMany(o => o.Params.Output)
-                  .ToList();
-
-               var otherParams = previewObjects
-                  .Where(o => o is IGH_Param)
-                  .Select(o => o as IGH_Param)
-                  .ToList();
-
                var operation = new EditOperation();
                componentParams.ForEach(p => showParam(operation, p, origin));
                otherParams.ForEach(p => showParam(operation, p, origin));

@@ -8,7 +8,7 @@
              xmlns:controls="clr-namespace:ArcGIS.Desktop.Framework.Controls;assembly=ArcGIS.Desktop.Framework"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
-                          d:DesignHeight="300" d:DesignWidth="320"
+                          d:DesignHeight="300" d:DesignWidth="360"
              d:DataContext="{Binding Path=ui.Dockpane1ViewModel}" Loaded="UserControl_Loaded">
   <UserControl.Resources>
     <ResourceDictionary>
@@ -40,7 +40,6 @@
               <Label Content="ArcRhino" Margin="6,0,0,0" Foreground="Black"></Label>
             </StackPanel>
           </MenuItem.Header>
-          <MenuItem Header="Set Rhino origin lat lon" Click="clickSetLatLon"/>
           <MenuItem Header="Open Rhino file" Click="clickOpenRhinoFile"/>
           <MenuItem Header="Import selected ArcGIS features" Click="bImport_Click"/>
           <MenuItem Header="Export selected Rhino geometry" Click="bExport_Click"/>

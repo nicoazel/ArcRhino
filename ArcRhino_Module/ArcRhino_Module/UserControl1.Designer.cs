@@ -72,7 +72,7 @@ namespace ArcRhino_Module
             // rhinoCore = new Rhino.Runtime.InProcess.RhinoCore(new string[] { "/NOSPLASH" }, WindowStyle.Hidden, Handle);
             rhinoCore = new Rhino.Runtime.InProcess.RhinoCore(new string[] { "/NOSPLASH" }, WindowStyle.Normal);
             // TODO: determine whether to load automatically or on-demand
-            // LoadGH();
+            LoadGH();
          }
          base.OnHandleCreated(e);
       }
@@ -115,9 +115,10 @@ namespace ArcRhino_Module
 
       private void Definition_SolutionEnd(object sender, GH_SolutionEventArgs e)
       {
-         if (Tag is Dockpane1View dock && dock.autoupdate.IsChecked == true) {
-             GhUtil.showDocumentPreview(dock.rhinoDoc);
-             // TODO: Add code to harvest display meshes when the Grasshopper Definition solution completes solving.
+         if (Tag is Dockpane1View dock && dock.autoupdate.IsChecked == true)
+         {
+            GhUtil.showDocumentPreview(dock.rhinoDoc);
+            // TODO: Add code to harvest display meshes when the Grasshopper Definition solution completes solving.
          }
       }
    }
