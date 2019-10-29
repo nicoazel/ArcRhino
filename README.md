@@ -20,6 +20,7 @@ We played with a few experimental projects like:
 - Solar  Radiation Analysis: For the selected plot, find the best tree locations for optimal comfort.
 - Viewshed Analysis: Analysing areas that are visible from specific locations.
 - Outdoor Comfort Analysis(UTCI): For the selected plot, find the best tree locations for optimal comfort.\
+
 The projects showcased the strengths of the strong modeling and scripting environment in Rhino along with the specialized GIS management system in ArcGIS to create some iterative design development workflows.
 
 ## Team
