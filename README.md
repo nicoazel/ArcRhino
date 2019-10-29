@@ -5,7 +5,7 @@ An AECTech 2019 Hackathon Rhino.Inside project for ESRI ArcGIS Pro
 
 [![Watch the video](https://github.com/nicoazel/ArcRhino/blob/master/Presentation%20Materials/Video%20frame.png)](https://vimeo.com/367573952)
 
-[Video](https://vimeo.com/367573952)
+[Video](https://vimeo.com/367573952)\
 [Download](https://tinyurl.com/arcrhino)
 
 ## Description
@@ -19,7 +19,7 @@ We played with a few experimental projects like:
 - Building Use Analysis: For the selected plot, find if the nearby buildings are commercial.
 - Solar  Radiation Analysis: For the selected plot, find the best tree locations for optimal comfort.
 - Viewshed Analysis: Analysing areas that are visible from specific locations.
-- Outdoor Comfort Analysis(UTCI): For the selected plot, find the best tree locations for optimal comfort.
+- Outdoor Comfort Analysis(UTCI): For the selected plot, find the best tree locations for optimal comfort.\
 The projects showcased the strengths of the strong modeling and scripting environment in Rhino along with the specialized GIS management system in ArcGIS to create some iterative design development workflows.
 
 ## Team
